@@ -6,6 +6,12 @@ from image_renderer import ImageRenderer
 from settings import Settings
 
 
+def check_for_quit():
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_ESCAPE] or keys[pygame.K_SPACE] or keys[pygame.K_q] or keys[pygame.K_x] or keys[pygame.K_z]:
+        exit(0)
+
+
 def main():
     gui = Gui()
     file_loader = FileLoader()
@@ -27,16 +33,17 @@ def main():
             progress_state = min(elapsed_time / duration_millis, 1.0)
             image_renderer.draw(progress_state)
             elapsed_time_after = pygame.time.get_ticks() - start_time
+            check_for_quit()
             additional_delay = max(0, (50 - (elapsed_time_after - elapsed_time)))
-            print('delay of ' + str(additional_delay) + ' added')
             pygame.time.wait(additional_delay)
-
 
 
 if __name__ == "__main__":
     main()
 
 
-
 # TODO:
-# 2. Fullscreen + handling of Q/Esc
+# File loader needs to recurse into lower folders
+# It needs to collect metadata
+# It needs to provide images in chunks of files that were created closer together
+# Background must not be black but of dominant color
