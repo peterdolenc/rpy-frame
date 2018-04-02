@@ -7,15 +7,15 @@ class Gui:
         pygame.init()
         self.mode = [800, 600]
         pygame.display.set_mode(self.mode, pygame.DOUBLEBUF | pygame.HWSURFACE)
-
         self.screen = pygame.display.get_surface()
         self.screen.fill((0, 0, 0))
 
+    def get_screen_resolution(self):
+        return self.mode
 
-    def display_image(self, image):
-        resized_image = pygame.transform.smoothscale(image, self.mode)
-        self.screen.blit(resized_image, (0, 0))
-        pygame.display.flip()
+    def display_image(self, image, posx = 0, posy = 0):
+        self.screen.fill((0, 0, 0))
+        self.screen.blit(image, (posx, posy))
         pygame.display.update()
         pygame.event.pump()
 
