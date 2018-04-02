@@ -2,31 +2,41 @@ import pygame
 
 from file_loader import FileLoader
 from gui import Gui
-from image_helper import ImageHelper
+from image_renderer import ImageRenderer
+from settings import Settings
 
 
 def main():
-    image_helper = ImageHelper()
     gui = Gui()
     file_loader = FileLoader()
+    settings = Settings()
+    image_renderer = ImageRenderer(settings, gui)
 
     files = file_loader.get_files()
     print(files)
 
 
-
-
-
     for file in files:
         image = file_loader.load_image(file)
-        resized = image_helper.resize(image, gui.get_screen_resolution())
-        for i in range(-50, 50):
-            gui.display_image(resized, i, i)
-            pygame.time.delay(50)
+        image_renderer.render_new_image(image)
+        start_time = pygame.time.get_ticks()
+        duration_millis = settings.duration * 1000
 
-
+        while pygame.time.get_ticks() < start_time + duration_millis:
+            elapsed_time = pygame.time.get_ticks() - start_time
+            progress_state = min(elapsed_time / duration_millis, 1.0)
+            image_renderer.draw(progress_state)
+            elapsed_time_after = pygame.time.get_ticks() - start_time
+            additional_delay = max(0, (50 - (elapsed_time_after - elapsed_time)))
+            print('delay of ' + str(additional_delay) + ' added')
+            pygame.time.wait(additional_delay)
 
 
 
 if __name__ == "__main__":
     main()
+
+
+
+# TODO:
+# 2. Fullscreen + handling of Q/Esc
