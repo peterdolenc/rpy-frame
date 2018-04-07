@@ -1,5 +1,3 @@
-import os
-
 
 class ImageMeta:
 
@@ -8,4 +6,7 @@ class ImageMeta:
         self.dominant_colors = None
         self.date = None
         self.caption = None
+
+    def sort_key(self):
+        return self.date if self.date is not None else self.full_path
 
