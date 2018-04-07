@@ -43,7 +43,6 @@ if __name__ == "__main__":
 
 
 # TODO:
-# File loader needs to recurse into lower folders
 # It needs to collect metadata
 # It needs to provide images in chunks of files that were created closer together
 # Background must not be black but of dominant color
