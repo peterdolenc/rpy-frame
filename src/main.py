@@ -19,8 +19,6 @@ def main():
     image_renderer = ImageRenderer(settings, gui)
 
     files = file_loader.get_files()
-    print(files)
-
 
     for file in files:
         image = file_loader.load_image(file)
@@ -43,6 +41,5 @@ if __name__ == "__main__":
 
 
 # TODO:
-# It needs to collect metadata
 # It needs to provide images in chunks of files that were created closer together
 # Background must not be black but of dominant color
