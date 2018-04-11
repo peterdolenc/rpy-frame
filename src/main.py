@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from entities.image_library import ImageLibrary
 from file_loader import FileLoader
 from gui import Gui
@@ -9,7 +11,7 @@ import sys
 def get_image_path(settings: Settings):
     if len(sys.argv) > 1:
         settings.media_folder = sys.argv[1]
-    print(f"Using {settings.media_folder} as media directory.")
+    print('Using {0} as media directory.'.format(settings.media_folder))
 
 def main():
     gui = Gui()

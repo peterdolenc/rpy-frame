@@ -24,7 +24,7 @@ class SlideshowPresenter:
     def present(self):
         while True:
             sequence = self.image_library.get_sequence()
-            print(f'Starting a new sequence with length of {len(sequence):d}')
+            print('Starting a new sequence with length of {}'.format(len(sequence)))
             for image_meta in sequence:
                 self.present_image(image_meta)
 
