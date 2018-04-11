@@ -21,6 +21,6 @@ if __name__ == "__main__":
 
 
 # TODO:
-# Background must not be black but of dominant color
 # More configurability
 # Channel to print data on screen
+# Align images randomly
