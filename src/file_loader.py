@@ -8,7 +8,7 @@ class FileLoader:
 
     def discover_images(self, directory: str) -> List[str]:
         images = self.get_files_from_directory(directory)
-        print('{} images discovered.'.format(len(images)))
+        print(f'{len(images):d} images discovered.')
 
         return images
 

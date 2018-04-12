@@ -17,7 +17,7 @@ class ImageLibrary:
         self.image_metas = [self.get_image_metadata(image) for image in image_paths]
         self.image_metas.sort(key=lambda im: im.sort_key())
         self.count: int = len(self.image_metas)
-        print('{} images parsed correctly.'.format(self.count))
+        print(f'{self.count:d} images parsed correctly.')
 
     # creates a new sequence of random length
     # sequence always provides images that are close together
