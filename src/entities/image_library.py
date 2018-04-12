@@ -9,14 +9,14 @@ from entities.image_meta import ImageMeta
 class ImageLibrary:
 
     def __init__(self):
-        self.image_metas= None
-        self.count = 0
+        self.image_metas: List[ImageMeta] = None
+        self.count: int = 0
 
     # initializes the image library by detecting metadata and sorting images
     def initialize(self, image_paths):
         self.image_metas = [self.get_image_metadata(image) for image in image_paths]
         self.image_metas.sort(key=lambda im: im.sort_key())
-        self.count = len(self.image_metas)
+        self.count: int = len(self.image_metas)
         print('{} images parsed correctly.'.format(self.count))
 
     # creates a new sequence of random length

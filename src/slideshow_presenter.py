@@ -13,9 +13,9 @@ from settings import Settings
 class SlideshowPresenter:
 
     def __init__(self, gui: Gui, settings: Settings, image_library: ImageLibrary):
-        self.gui = gui
-        self.settings = settings
-        self.image_library = image_library
+        self.gui: Gui = gui
+        self.settings: Settings = settings
+        self.image_library: ImageLibrary = image_library
         self.file_loader = FileLoader()
         self.image_renderer = ImageRenderer(settings, gui)
         self.background_helper = BackgroundHelper(gui.get_screen_resolution())
