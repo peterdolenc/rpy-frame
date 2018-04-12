@@ -9,9 +9,9 @@ from settings import Settings
 class ImageRenderer:
 
     def __init__(self, settings: Settings, gui: Gui):
-        self.gui: Gui = gui
+        self.gui = gui
         self.screen_dimensions = gui.get_screen_resolution()
-        self.settings: Settings = settings
+        self.settings = settings
 
         self.image_fitment = None
 
