@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.6
+
 from entities.image_library import ImageLibrary
 from file_loader import FileLoader
 from gui import Gui
