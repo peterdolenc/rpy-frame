@@ -10,12 +10,17 @@ import sys
 
 def get_image_path(settings: Settings):
     if len(sys.argv) > 1:
-        settings.media_folder = sys.argv[1]
+        if sys.argv[1] == 'dev':
+            settings.dev_mode = True
+            settings.duration = 20
+            print("Running in dev mode.")
+        else:
+            settings.media_folder = sys.argv[1]
     print(f"Using {settings.media_folder} as media directory.")
 
 def main():
-    gui = Gui()
     settings = Settings()
+    gui = Gui(settings)
     get_image_path(settings)
     file_loader = FileLoader()
     image_paths = file_loader.discover_images(settings.media_folder)
@@ -32,4 +37,3 @@ if __name__ == "__main__":
 # TODO:
 # More configurability
 # Channel to print data on screen
-# Align images randomly

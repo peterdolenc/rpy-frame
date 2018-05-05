@@ -2,6 +2,9 @@ class Settings:
 
     def __init__(self):
 
+        # dev mode
+        self.dev_mode: bool = True
+
         # media folder
         # will be replaced by commandline param
         self.media_folder: str = "../samples"
