@@ -35,5 +35,24 @@ if __name__ == "__main__":
 
 
 # TODO:
-# More configurability
+# Refactor background maker
+# - Enable more backgrounds
+# - More configurability for the background
+# Refactor and improve how border around image is displayed
+# - configurability
+# - gutter should be included in the calculation of image fitment
 # Channel to print data on screen
+# - print date on screen (configurable)
+# - print image comment on screen
+# Hardware button listener (use pin 11)
+# - listen for single press and long press
+# Hardware button action: display date
+# Hardware button action: next image (works only once)
+# Optimize dominant color calc and background creation when image is displayed fullscreen
+# Add movie support
+
+# TODO / MAYBE
+# Animated backgrounds?
+# Image transitions?
+# Image effects (2 images merged?)
+# Optimizations?
