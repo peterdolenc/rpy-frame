@@ -1,3 +1,6 @@
+import random
+from enum import Enum
+
 import pygame
 
 from entities.image_fitment import Fitment, ImageFitment
@@ -12,7 +15,7 @@ class ImageRenderer:
         self.gui: Gui = gui
         self.screen_dimensions = gui.get_screen_resolution()
         self.settings: Settings = settings
-
+        self.alignment = 0
         self.image_fitment = None
 
     # Draw the image at the correct position regarding to how much time is left
@@ -20,6 +23,9 @@ class ImageRenderer:
         elapsed = 1.0 - progress
         center_x = (self.screen_dimensions[0] - fitment.current_image.get_width()) / 2
         center_y = (self.screen_dimensions[1] - fitment.current_image.get_height()) / 2
+
+        if self.screen_dimensions[0] > fitment.current_image.get_width():
+            center_x = self.alignment
 
         if fitment.current_fitment == Fitment.STILL:
             self.gui.display_image(fitment.current_image, center_x, center_y, fitment.current_background)
@@ -109,6 +115,12 @@ class ImageRenderer:
         image_fitment.end_position = end_position
         image_fitment.current_fitment = current_fitment
         image_fitment.current_image = ImageHelper.resize(image, (resize_width, resize_height))
+
+        if self.screen_dimensions[0] > image_fitment.current_image.get_width():
+            inner_gutter = 5
+            free_space = self.screen_dimensions[0] - image_fitment.current_image.get_width()
+            self.alignment = random.randint(inner_gutter, free_space - 2 * inner_gutter)
+
         return image_fitment
 
 
