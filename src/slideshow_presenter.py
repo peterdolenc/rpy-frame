@@ -33,7 +33,7 @@ class SlideshowPresenter:
         image = self.file_loader.load_image(image_meta.full_path)
         fitment = self.image_renderer.fit_new_image(image)
         dominant_colors = ImageHelper.get_dominant_colors(image_meta, fitment.current_image)
-        fitment.current_background = self.background_helper.get_dominant_color_fill(dominant_colors)
+        fitment.current_background = self.background_helper.get_dominant_pattern(dominant_colors)
         start_time = pygame.time.get_ticks()
         duration_millis = self.settings.duration * 1000
 

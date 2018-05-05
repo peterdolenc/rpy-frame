@@ -22,6 +22,12 @@ class Gui:
         self.screen.fill((0, 0, 0))
         if background is not None:
             self.screen.blit(background, (0, 0))
+
+        t = 20
+        pygame.draw.rect(self.screen, (255,255,255), [posx - t, posy - t, image.get_width() + 2*t, image.get_height() + 2*t])
+        t = 5
+        pygame.draw.rect(self.screen, (0,0,0), [posx - t, posy - t, image.get_width() + 2*t, image.get_height() + 2*t])
+
         self.screen.blit(image, (posx, posy))
         pygame.display.update()
         pygame.event.pump()
