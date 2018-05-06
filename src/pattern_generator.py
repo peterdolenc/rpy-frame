@@ -22,14 +22,14 @@ class PatternGenerator:
 
     # creates tne subplot on the figure that has no spacing around
     @staticmethod
-    def create_subplot(fig, range_x, range_y, background_color, alpha):
+    def create_subplot(fig, range_x, range_y, background_color, alpha, gray_lightness):
         subplot = fig.add_axes((0, 0, 1, 1))
         subplot.xaxis.set_visible(False)
         subplot.yaxis.set_visible(False)
         subplot.set_xlim([0, range_x])
         subplot.set_ylim([0, range_y])
         subplot.axis('off')
-        neutral_gray = (0.5, 0.5, 0.5)
+        neutral_gray = (gray_lightness, gray_lightness, gray_lightness)
         subplot.add_patch(patches.Rectangle((0, 0), range_x, range_y, fc=neutral_gray, alpha=1, ec='none'))
         subplot.add_patch(patches.Rectangle((0, 0), range_x, range_y, fc=background_color, alpha=alpha, ec='none'))
         return subplot
@@ -51,7 +51,7 @@ class PatternGenerator:
         return random.random() * (max-min) + min
 
     # Displays different sized circles
-    def playful_circles(self, C, B, A, D, E, animation=None, ppi=180, alpha=0.5):
+    def playful_circles(self, C, B, A, D, E, animation=None, ppi=180, alpha=0.5, background_lightness=0.5):
 
         N = 0x0000001
         rep_size = 60
@@ -109,7 +109,7 @@ class PatternGenerator:
 
         # prepare subplot
         background_color = C
-        subplot = self.create_subplot(fig, horizontal_reps * rep_size, vertical_reps * rep_size, background_color, alpha)
+        subplot = self.create_subplot(fig, horizontal_reps * rep_size, vertical_reps * rep_size, background_color, alpha, background_lightness)
 
         for h_rep in range(0, horizontal_reps):
             for v_rep in range(0, vertical_reps):

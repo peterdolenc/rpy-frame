@@ -37,8 +37,9 @@ class Settings:
         self.portrait_edge_min: float = 0.05
 
         # Alpha value of the background - colors of the background will not be as strong as the colors of the photo
-        # They will be projected against 50% neutral gray
-        self.background_alpha: float = 0.5
+        # They will be projected against neutral gray that is controlled by background_lightness and where 0.5 means 50% gray
+        self.background_alpha: float = 0.4
+        self.background_lightness: float = 0.5
 
         # PPI (pixels per inch) of the background
         # Lower values will result in more repetitions of the background patterns
@@ -51,7 +52,7 @@ class Settings:
         # It's color should therefore match the color of the material around the screen
         self.border_inner: int = 8
         self.border_outer: int = 32
-        self.outer_border_color = (194, 194, 184)
+        self.outer_border_color = (217, 217, 197)
 
 
 

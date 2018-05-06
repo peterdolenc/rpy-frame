@@ -23,7 +23,7 @@ class BackgroundHelper:
 
     def get_dominant_pattern(self, colors: List[Tuple[int]], animation=None) -> pygame.Surface:
         hex_colors = (self.to_hex(c) for c in colors[:5])
-        surface = self.pattern_generator.playful_circles(*hex_colors, animation, self.settings.background_ppi, self.settings.background_alpha)
+        surface = self.pattern_generator.playful_circles(*hex_colors, animation, self.settings.background_ppi, self.settings.background_alpha, self.settings.background_lightness)
 
         return surface
 
