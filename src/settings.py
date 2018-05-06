@@ -43,7 +43,9 @@ class Settings:
 
         # PPI (pixels per inch) of the background
         # Lower values will result in more repetitions of the background patterns
-        self.background_ppi: int = 375
+        self.background_ppi: int = 300
+        self.background_amount_min: float = 0.2
+        self.background_amount_max: float = 0.7
 
         # Border thicknesses and colors
         # Inner border is considered part of the picture and is always black

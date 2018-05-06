@@ -51,7 +51,7 @@ class PatternGenerator:
         return random.random() * (max-min) + min
 
     # Displays different sized circles
-    def playful_circles(self, C, B, A, D, E, animation=None, ppi=180, alpha=0.5, background_lightness=0.5):
+    def playful_circles(self, C, B, A, D, E, animation=None, ppi=180, alpha=0.5, background_lightness=0.5, amount_min=0, amount_max=1):
 
         N = 0x0000001
         rep_size = 60
@@ -59,6 +59,7 @@ class PatternGenerator:
 
         alpha_rand1 = self.randf(0.75, 1.0)
         alpha_rand2 = self.randf(0.5, 0.85)
+        amount = self.randf(amount_min, amount_max)
 
         horizontal_reps = int(math.ceil(float(self.display_mode[0])/float(ppi)))
         vertical_reps = int(math.ceil(float(self.display_mode[1])/float(ppi)))
@@ -93,6 +94,15 @@ class PatternGenerator:
             [A, E, B, B, E, A, N],
             [N, N, N, N, N, N, N]]
 
+        diagonals = lambda i, j: 1 if i == j else 0
+        diagonals2 = lambda i, j: 1 if i == 6-j else 0
+        small_diff = lambda i, j: 1 if math.fabs(i - j) < 2 else 0
+        cross = lambda i, j: 1 if math.fabs(i - 3) + math.fabs(j - 3) < 2 else 0
+        full = lambda i, j: 1
+
+        fn = random.choice([ diagonals, diagonals2, small_diff, cross, full ])
+        probabilities = [ [  fn(i, j) for j in range(0, 7) ] for i in range(0, 7)]
+
         # inner dot radius - progression for animation inf enabled
         inner_dot_radiuses = [0.2, 0.2, 0.2, 0.2, 0.3, 0.4, 0.5, 0.6, 0.6, 0.6, 0.5, 0.4, 0.3]
 
@@ -121,6 +131,9 @@ class PatternGenerator:
 
                     # j goes from 0 to number of colors in every set (7) - columns
                     for j in range(0, len(outer_ring_colors[0])):
+
+                        if probabilities[i][j] <= amount and self.randf(0, 0.8) <= amount:
+                            continue
 
                         center_x = offset_x + circle_radius * (2*j + 1)
                         center_y = offset_y + circle_radius * (2*i + 1)
