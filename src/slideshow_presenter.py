@@ -20,7 +20,7 @@ class SlideshowPresenter:
         self.image_renderer = ImageRenderer(settings, gui)
         self.background_helper = BackgroundHelper(gui.get_screen_resolution(), settings)
 
-    # presents (indefinitelly)
+    # presents (indefinitely)
     def present(self):
         while True:
             sequence = self.image_library.get_sequence()

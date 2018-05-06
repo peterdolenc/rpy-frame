@@ -44,4 +44,10 @@ class Settings:
         # Lower values will result in more repetitions of the background patterns
         self.background_ppi: int = 175
 
+        # Inner photo border thickness
+        self.border_inner: int = 8
+
+        # Outer photo border thickness
+        self.border_outer: int = 32
+
 

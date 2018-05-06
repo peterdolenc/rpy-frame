@@ -5,6 +5,7 @@ from settings import Settings
 class Gui:
 
     def __init__(self, settings: Settings):
+        self.settings = settings
         pygame.init()
         self.mode = max(pygame.display.list_modes())
         # for testing on macbook
@@ -25,10 +26,9 @@ class Gui:
         if background is not None:
             self.screen.blit(background, (0, 0))
 
-        t = 20
-        pygame.draw.rect(self.screen, (255,255,255), [posx - t, posy - t, image.get_width() + 2*t, image.get_height() + 2*t])
-        t = 5
-        pygame.draw.rect(self.screen, (0,0,0), [posx - t, posy - t, image.get_width() + 2*t, image.get_height() + 2*t])
+        if self.settings.border_outer > 0:
+            border = self.settings.border_outer
+            pygame.draw.rect(self.screen, (255,255,255), [posx - border, posy - border, image.get_width() + 2*border, image.get_height() + 2*border])
 
         self.screen.blit(image, (posx, posy))
         pygame.display.update()

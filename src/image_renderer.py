@@ -43,6 +43,7 @@ class ImageRenderer:
         screen_height = self.screen_dimensions[1]
         screen_ratio = screen_width / screen_height
         end_position = 0
+        use_inner_border = True
 
         resize_width = self.screen_dimensions[0]
         resize_height = self.screen_dimensions[1]
@@ -72,6 +73,7 @@ class ImageRenderer:
                 # less than min gap area fitment is fitted by width
                 if is_less_than_min_gap_area:
                     resize_width = screen_width
+                    use_inner_border = False
                 elif is_more_than_max_gap_area:
                     resize_width = screen_width * (1.0 - self.settings.portrait_edge_max)
 
@@ -103,6 +105,7 @@ class ImageRenderer:
                 # for bellow min image is fitted by width
                 if is_less_than_min_gap_area:
                     resize_height = screen_height
+                    use_inner_border = False
 
                 # for above max fitment width is screen width minus the maximum allowed amount of gap area
                 elif is_more_than_max_gap_area:
@@ -114,12 +117,15 @@ class ImageRenderer:
         image_fitment = ImageFitment(self.screen_dimensions)
         image_fitment.end_position = end_position
         image_fitment.current_fitment = current_fitment
-        image_fitment.current_image = ImageHelper.resize(image, (resize_width, resize_height))
+        image_fitment.current_image = ImageHelper.resize(image, (resize_width, resize_height), self.settings.border_inner if use_inner_border else 0)
 
         if self.screen_dimensions[0] > image_fitment.current_image.get_width():
-            inner_gutter = 5
             free_space = self.screen_dimensions[0] - image_fitment.current_image.get_width()
-            self.alignment = random.randint(inner_gutter, free_space - 2 * inner_gutter)
+            self.alignment = random.randint(0, free_space)
+            if self.alignment < self.settings.border_outer:
+                self.alignment = 0
+            elif free_space - self.alignment < self.settings.border_outer:
+                self.alignment = free_space
 
         return image_fitment
 

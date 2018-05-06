@@ -9,14 +9,17 @@ from entities.image_meta import ImageMeta
 class ImageHelper:
 
     # resizes the image to target dimensions
-    def resize(image: pygame.Surface,  dimensions) -> pygame.Surface:
+    def resize(image: pygame.Surface, dimensions, border: int) -> pygame.Surface:
         dimensions = (int(dimensions[0]), int(dimensions[1]))
-        return pygame.transform.smoothscale(image, dimensions)
+        image_surface = pygame.transform.smoothscale(image, (dimensions[0] - 2 * border, dimensions[1] - 2 * border))
+        surface = pygame.Surface(dimensions)
+        surface.blit(image_surface, (border, border))
+        return surface
 
     # gets the dominant colors
     # uses color thief to extract them
     # then sorts them by color intensity and occurrence
-    def get_dominant_colors(image_meta: ImageMeta, image:pygame.Surface, colour_count=10, sampling=10) -> List[Tuple[int]]:
+    def get_dominant_colors(image_meta: ImageMeta, image:pygame.Surface, colour_count=8, sampling=10) -> List[Tuple[int]]:
         ct = ColorThief(image_meta.full_path)
         colors = ct.get_palette(colour_count, sampling)
         hsvs = [ (*colorsys.rgb_to_hsv(*colors[i]), i) for i in range(len(colors)) ]
