@@ -28,7 +28,7 @@ class Gui:
 
         if self.settings.border_outer > 0:
             border = self.settings.border_outer
-            pygame.draw.rect(self.screen, (255,255,255), [posx - border, posy - border, image.get_width() + 2*border, image.get_height() + 2*border])
+            pygame.draw.rect(self.screen, self.settings.outer_border_color, [posx - border, posy - border, image.get_width() + 2*border, image.get_height() + 2*border])
 
         self.screen.blit(image, (posx, posy))
         pygame.display.update()
