@@ -36,4 +36,12 @@ class Settings:
         self.portrait_edge_max: float = 0.5
         self.portrait_edge_min: float = 0.05
 
+        # Alpha value of the background - colors of the background will not be as strong as the colors of the photo
+        # They will be projected against 50% neutral gray
+        self.background_alpha: float = 0.5
+
+        # PPI (pixels per inch) of the background
+        # Lower values will result in more repetitions of the background patterns
+        self.background_ppi: int = 175
+
 

@@ -1,3 +1,4 @@
+import math
 import pygame
 from typing import List
 import scipy
@@ -8,6 +9,7 @@ from matplotlib import patches
 
 '''
  Idea and base for the code taken from: https://github.com/eleanorlutz/AnimatedPythonPatterns/blob/master/PatternMaker.ipynb
+ But quite heavily modified
  Might be replaced in the future by pure surfaces solution instead of plotting
 '''
 ar = scipy.array
@@ -49,18 +51,19 @@ class PatternGenerator:
         return random.random() * (max-min) + min
 
     # Displays different sized circles
-    def playful_circles(self, C, B, A, D, E, animation=None):
+    def playful_circles(self, C, B, A, D, E, animation=None, ppi=180, alpha=0.5):
 
-        vertical_reps = 8
-        horizontal_reps = 8
+        N = 0x0000001
         rep_size = 60
-        alpha = 0.5
         circle_radius = 5
+
         alpha_rand1 = self.randf(0.75, 1.0)
         alpha_rand2 = self.randf(0.5, 0.85)
-        N = 0x0000001
 
-        fig = plt.figure(figsize=(10, 10), dpi=int(self.display_mode[0] / 10 + 1))
+        horizontal_reps = int(math.ceil(float(self.display_mode[0])/float(ppi)))
+        vertical_reps = int(math.ceil(float(self.display_mode[1])/float(ppi)))
+
+        fig = plt.figure(figsize=(horizontal_reps, vertical_reps), dpi=ppi)
         plt.subplots_adjust(hspace=0, wspace=0)
 
         outer_ring_colors = [

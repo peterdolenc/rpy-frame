@@ -1,15 +1,15 @@
-from __future__ import division
 import pygame
 from typing import List, Tuple
-
 from pattern_generator import PatternGenerator
+from settings import Settings
 
 
 class BackgroundHelper:
 
-    def __init__(self, display_mode: List[int]):
+    def __init__(self, display_mode: List[int], settings: Settings):
         self.display_mode = display_mode
         self.pattern_generator = PatternGenerator(display_mode)
+        self.settings = settings
 
     @staticmethod
     def to_hex(rgb):
@@ -21,9 +21,9 @@ class BackgroundHelper:
         surface.fill(colors[0])
         return surface
 
-    def get_dominant_pattern(self, colors: List[Tuple[int]]) -> pygame.Surface:
+    def get_dominant_pattern(self, colors: List[Tuple[int]], animation=None) -> pygame.Surface:
         hex_colors = (self.to_hex(c) for c in colors[:5])
-        surface = self.pattern_generator.playful_circles(*hex_colors)
+        surface = self.pattern_generator.playful_circles(*hex_colors, animation, self.settings.background_ppi, self.settings.background_alpha)
 
         return surface
 

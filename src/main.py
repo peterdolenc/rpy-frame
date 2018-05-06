@@ -35,9 +35,7 @@ if __name__ == "__main__":
 
 
 # TODO:
-# Refactor background maker
-# - Enable more backgrounds
-# - More configurability for the background
+# Enable more backgrounds
 # Refactor and improve how border around image is displayed
 # - configurability
 # - gutter should be included in the calculation of image fitment

@@ -18,7 +18,7 @@ class SlideshowPresenter:
         self.image_library: ImageLibrary = image_library
         self.file_loader = FileLoader()
         self.image_renderer = ImageRenderer(settings, gui)
-        self.background_helper = BackgroundHelper(gui.get_screen_resolution())
+        self.background_helper = BackgroundHelper(gui.get_screen_resolution(), settings)
 
     # presents (indefinitelly)
     def present(self):
@@ -40,6 +40,7 @@ class SlideshowPresenter:
         while pygame.time.get_ticks() < start_time + duration_millis:
             elapsed_time = pygame.time.get_ticks() - start_time
             progress_state = min(elapsed_time / duration_millis, 1.0)
+            # fitment.current_background = self.background_helper.get_dominant_pattern(dominant_colors, progress_state)
             self.image_renderer.draw(progress_state, fitment)
             elapsed_time_after = pygame.time.get_ticks() - start_time
             self.check_for_quit()
