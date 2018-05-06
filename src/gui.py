@@ -21,16 +21,30 @@ class Gui:
     def get_screen_resolution(self):
         return self.mode
 
-    def display_image(self, image: pygame.Surface, posx: int, posy: int, background: pygame.Surface=None):
-        self.screen.fill((0, 0, 0))
+    def display_image(self, image: pygame.Surface, posx: int, posy: int, background: pygame.Surface=None, upper_right_text=None):
         if background is not None:
             self.screen.blit(background, (0, 0))
+        else:
+            self.screen.fill((0, 0, 0))
 
         if self.settings.border_outer > 0:
             border = self.settings.border_outer
             pygame.draw.rect(self.screen, self.settings.outer_border_color, [posx - border, posy - border, image.get_width() + 2*border, image.get_height() + 2*border])
 
         self.screen.blit(image, (posx, posy))
+
+        if upper_right_text is not None:
+            space = 10
+            overlap = 1
+            font = pygame.font.SysFont(None, 36)
+            text_bg = font.render(upper_right_text, True, (0, 0, 0))
+            text = font.render(upper_right_text, True, (255, 255, 255))
+            self.screen.blit(text_bg, (self.mode[0] - text.get_width() - space - overlap, space))
+            self.screen.blit(text_bg, (self.mode[0] - text.get_width() - space + overlap, space))
+            self.screen.blit(text_bg, (self.mode[0] - text.get_width() - space, space - overlap))
+            self.screen.blit(text_bg, (self.mode[0] - text.get_width() - space, space + overlap))
+            self.screen.blit(text, (self.mode[0] - text.get_width() - space, space))
+
         pygame.display.update()
         pygame.event.pump()
 

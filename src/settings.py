@@ -38,12 +38,12 @@ class Settings:
 
         # Alpha value of the background - colors of the background will not be as strong as the colors of the photo
         # They will be projected against neutral gray that is controlled by background_lightness and where 0.5 means 50% gray
-        self.background_alpha: float = 0.4
-        self.background_lightness: float = 0.5
+        self.background_alpha: float = 0.3
+        self.background_lightness: float = 0.7
 
         # PPI (pixels per inch) of the background
         # Lower values will result in more repetitions of the background patterns
-        self.background_ppi: int = 175
+        self.background_ppi: int = 375
 
         # Border thicknesses and colors
         # Inner border is considered part of the picture and is always black
@@ -52,7 +52,10 @@ class Settings:
         # It's color should therefore match the color of the material around the screen
         self.border_inner: int = 8
         self.border_outer: int = 32
-        self.outer_border_color = (217, 217, 197)
+        self.outer_border_color = (211, 211, 203)
+
+        # Whether to display date in top-left corner
+        self.display_date: bool = False
 
 
 

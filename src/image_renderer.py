@@ -19,7 +19,7 @@ class ImageRenderer:
         self.image_fitment = None
 
     # Draw the image at the correct position regarding to how much time is left
-    def draw(self, progress: float, fitment: ImageFitment):
+    def draw(self, progress: float, fitment: ImageFitment, text=None):
         elapsed = 1.0 - progress
         center_x = (self.screen_dimensions[0] - fitment.current_image.get_width()) / 2
         center_y = (self.screen_dimensions[1] - fitment.current_image.get_height()) / 2
@@ -28,11 +28,11 @@ class ImageRenderer:
             center_x = self.alignment
 
         if fitment.current_fitment == Fitment.STILL:
-            self.gui.display_image(fitment.current_image, center_x, center_y, fitment.current_background)
+            self.gui.display_image(fitment.current_image, center_x, center_y, fitment.current_background, text)
         elif fitment.current_fitment == Fitment.HORIZONTAL_SCROLL:
-            self.gui.display_image(fitment.current_image, int((-1) * fitment.end_position * elapsed), center_y, fitment.current_background)
+            self.gui.display_image(fitment.current_image, int((-1) * fitment.end_position * elapsed), center_y, fitment.current_background, text)
         elif fitment.current_fitment == Fitment.VERTICAL_SCROLL:
-            self.gui.display_image(fitment.current_image, center_x, int(-1 * fitment.end_position * elapsed), fitment.current_background)
+            self.gui.display_image(fitment.current_image, center_x, int(-1 * fitment.end_position * elapsed), fitment.current_background, text)
 
     # Determine how we are fitting the image - by width or by height (or full image)
     # Determine how much you have to zoom in in order to keep the black area in the range of the setting
