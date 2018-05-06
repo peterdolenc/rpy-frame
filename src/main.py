@@ -8,7 +8,7 @@ from slideshow_presenter import SlideshowPresenter
 import sys
 
 
-def get_image_path(settings: Settings):
+def parse_cmd_args(settings: Settings):
     if len(sys.argv) > 1:
         if sys.argv[1] == 'dev':
             settings.dev_mode = True
@@ -20,8 +20,8 @@ def get_image_path(settings: Settings):
 
 def main():
     settings = Settings()
+    parse_cmd_args(settings)
     gui = Gui(settings)
-    get_image_path(settings)
     file_loader = FileLoader()
     image_paths = file_loader.discover_images(settings.media_folder)
     image_library = ImageLibrary()
