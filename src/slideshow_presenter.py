@@ -36,12 +36,13 @@ class SlideshowPresenter:
         fitment.current_background = self.background_helper.get_dominant_pattern(dominant_colors)
         start_time = pygame.time.get_ticks()
         duration_millis = self.settings.duration * 1000
+        upper_text = image_meta.date.strftime("%d %B %Y %H:%M") if self.settings.display_date else None
 
         while pygame.time.get_ticks() < start_time + duration_millis:
             elapsed_time = pygame.time.get_ticks() - start_time
             progress_state = min(elapsed_time / duration_millis, 1.0)
             # fitment.current_background = self.background_helper.get_dominant_pattern(dominant_colors, progress_state)
-            self.image_renderer.draw(progress_state, fitment, image_meta.date.strftime("%d %B %Y %H:%M"))
+            self.image_renderer.draw(progress_state, fitment, upper_text)
             elapsed_time_after = pygame.time.get_ticks() - start_time
             self.check_for_quit()
             if self.check_for_next():
