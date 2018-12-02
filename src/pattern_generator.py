@@ -56,6 +56,7 @@ class PatternGenerator:
         N = 0x0000001
         rep_size = 60
         circle_radius = 5
+        alpha2 = 1.0
 
         alpha_rand1 = self.randf(0.75, 1.0)
         alpha_rand2 = self.randf(0.5, 0.85)
@@ -140,20 +141,20 @@ class PatternGenerator:
 
                         # outer circle
                         subplot.add_patch(
-                            patches.Circle((center_x, center_y), circle_radius, fc=outer_ring_colors[i][j], alpha=alpha, ec='none'))
+                            patches.Circle((center_x, center_y), circle_radius, fc=outer_ring_colors[i][j], alpha=alpha*alpha2, ec='none'))
 
                         # middle circle
                         subplot.add_patch(
-                            patches.Circle((center_x, center_y), 0.7 * circle_radius, fc=middle_ring_colors[i][j], alpha=alpha_rand1*alpha, ec='none'))
+                            patches.Circle((center_x, center_y), 0.7 * circle_radius, fc=middle_ring_colors[i][j], alpha=alpha_rand1*alpha*alpha2, ec='none'))
 
                         # small circle in the gap between
                         if gap_dots_colors[i][j] != N:
                             subplot.add_patch(
-                                patches.Circle((center_x - circle_radius, center_y - circle_radius), 0.3*circle_radius, fc=gap_dots_colors[i][j], alpha=0.75*alpha, ec='none'))
+                                patches.Circle((center_x - circle_radius, center_y - circle_radius), 0.3*circle_radius, fc=gap_dots_colors[i][j], alpha=0.75*alpha*alpha2, ec='none'))
 
                         # slightly less opaque random growing dot surround
                         subplot.add_patch(
-                            patches.Circle((center_x, center_y), self.randf(0.2, inner_dot_max_radius) * circle_radius, fc=background_color, alpha=alpha_rand2 * alpha, ec='none'))
+                            patches.Circle((center_x, center_y), self.randf(0.2, inner_dot_max_radius) * circle_radius, fc=background_color, alpha=alpha_rand2 * alpha*alpha2, ec='none'))
 
                         # the dot
                         subplot.add_patch(
