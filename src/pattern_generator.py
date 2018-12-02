@@ -1,3 +1,4 @@
+import PIL
 import math
 import pygame
 from typing import List
@@ -5,6 +6,7 @@ import scipy
 import random
 import matplotlib.backends.backend_agg as agg
 import matplotlib.pyplot as plt
+from PIL import Image, ImageFilter
 from matplotlib import patches
 
 '''
@@ -36,12 +38,18 @@ class PatternGenerator:
 
     # converts the plot to a pygame surface
     @staticmethod
-    def surface_from_plot(fig):
+    def surface_from_plot(fig, blur, blur_radius):
         canvas = agg.FigureCanvasAgg(fig)
         canvas.draw()
         renderer = canvas.get_renderer()
         raw_data = renderer.tostring_rgb()
         size = canvas.get_width_height()
+
+        if blur:
+            img = Image.frombytes("RGB", size, raw_data)
+            blur = img.filter(ImageFilter.GaussianBlur(radius=blur_radius))
+            raw_data = blur.tobytes()
+
         surf = pygame.image.fromstring(raw_data, size, "RGB")
         return surf
 
@@ -50,8 +58,9 @@ class PatternGenerator:
     def randf(min, max):
         return random.random() * (max-min) + min
 
+
     # Displays different sized circles
-    def playful_circles(self, C, B, A, D, E, animation=None, ppi=180, alpha=0.5, background_lightness=0.5, amount_min=0, amount_max=1):
+    def playful_circles(self, C, B, A, D, E, animation=None, ppi=180, alpha=0.5, background_lightness=0.5, amount_min=0, amount_max=1, blur=True, blur_radius=2):
 
         N = 0x0000001
         rep_size = 60
@@ -161,7 +170,7 @@ class PatternGenerator:
                             patches.Circle((center_x, center_y), 0.2*circle_radius, fc=background_color, alpha=alpha, ec='none'))
 
         # create surface from plot and clean the plot
-        surf = self.surface_from_plot(fig)
+        surf = self.surface_from_plot(fig, blur, blur_radius)
         plt.clf()
         plt.close('all')
 
