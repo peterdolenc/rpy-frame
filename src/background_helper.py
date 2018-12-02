@@ -1,3 +1,5 @@
+import random
+
 import pygame
 from typing import List, Tuple
 from pattern_generator import PatternGenerator
@@ -23,7 +25,13 @@ class BackgroundHelper:
 
     def get_dominant_pattern(self, colors: List[Tuple[int]], animation=None) -> pygame.Surface:
         hex_colors = (self.to_hex(c) for c in colors[:5])
-        surface = self.pattern_generator.playful_circles(*hex_colors, animation, self.settings.background_ppi, self.settings.background_alpha, self.settings.background_lightness,
+
+        if random.random() > 0.5:
+            surface = self.pattern_generator.playful_circles(*hex_colors, animation, self.settings.background_ppi, self.settings.background_alpha, self.settings.background_lightness,
+                                                             blur=self.settings.blur_background, blur_radius=self.settings.blur_background_radius)
+
+        else:
+            surface = self.pattern_generator.astro_stars(*hex_colors, animation, self.settings.background_ppi, self.settings.background_alpha, self.settings.background_lightness,
                                                          blur=self.settings.blur_background, blur_radius=self.settings.blur_background_radius)
 
         return surface

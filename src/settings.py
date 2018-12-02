@@ -38,7 +38,7 @@ class Settings:
 
         # Alpha value of the background - colors of the background will not be as strong as the colors of the photo
         # They will be projected against neutral gray that is controlled by background_lightness and where 0.5 means 50% gray
-        self.background_alpha: float = 0.09
+        self.background_alpha: float = 0.15
         self.background_lightness: float = 0.0
 
         # PPI (pixels per inch) of the background
@@ -54,7 +54,7 @@ class Settings:
         # It's color should therefore match the color of the material around the screen
         self.outer_border_color = (231, 231, 223)
         self.border_inner: int = 0
-        self.border_outer: int = 10
+        self.border_outer: int = 12
 
         # Blur background
         self.blur_background = True
