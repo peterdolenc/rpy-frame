@@ -8,17 +8,19 @@ from gui import Gui
 from image_helper import ImageHelper
 from image_renderer import ImageRenderer
 from settings import Settings
+from thread_context import ThreadContext
 
 
 class SlideshowPresenter:
 
-    def __init__(self, gui: Gui, settings: Settings, image_library: ImageLibrary):
+    def __init__(self, gui: Gui, settings: Settings, image_library: ImageLibrary, thread_context: ThreadContext):
         self.gui: Gui = gui
         self.settings: Settings = settings
         self.image_library: ImageLibrary = image_library
         self.file_loader = FileLoader()
         self.image_renderer = ImageRenderer(settings, gui)
         self.background_helper = BackgroundHelper(gui.get_screen_resolution(), settings)
+        self.thread_context = thread_context
 
     # presents (indefinitely)
     def present(self):
@@ -59,5 +61,9 @@ class SlideshowPresenter:
 
     # checks if right arrow key button was presed
     def check_for_next(self):
-        keys = pygame.key.get_pressed()
-        return keys[pygame.K_RIGHT] or keys[pygame.HAT_RIGHT]
+        if self.thread_context.button_pressed:
+            self.thread_context.button_pressed = 0
+            return True
+        else:
+            keys = pygame.key.get_pressed()
+            return keys[pygame.K_RIGHT] or keys[pygame.HAT_RIGHT]
