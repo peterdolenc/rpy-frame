@@ -62,7 +62,8 @@ class SlideshowPresenter:
     # checks if right arrow key button was presed
     def check_for_next(self):
         if self.thread_context.button_pressed:
-            self.thread_context.button_pressed = 0
+            print("Button press detected.")
+            self.thread_context.button_pressed = False
             return True
         else:
             keys = pygame.key.get_pressed()

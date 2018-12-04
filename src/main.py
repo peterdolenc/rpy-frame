@@ -27,7 +27,7 @@ def parse_cmd_args(settings: Settings):
 def main():
     thread_context = ThreadContext()
 
-    _thread.start_new_thread(start_io_thread, (thread_context, ""))
+    _thread.start_new_thread(start_io_thread, (thread_context,))
 
     # main thread
     start_presentation_thread(thread_context)
@@ -57,7 +57,8 @@ def start_io_thread(thread_context):
         if is_rbpi():
             input = GPIO.input(23)
             if input == 1:
-                thread_context.button_pressed = 1
+                print("Phisical button on pin 23 pressed.")
+                thread_context.button_pressed = True
                 time.sleep(60)
 
         time.sleep(1)
