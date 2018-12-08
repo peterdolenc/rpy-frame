@@ -37,7 +37,7 @@ class IoMain():
         return os.uname()[4][:3] == 'arm'
 
     def button_handler(self, duration):
-        print("Physical button pressed with duration: " + duration)
+        print("Physical button pressed with duration: " + str(duration) + " ms")
 
         if duration > self.settings.physical_button_longpress_duration:
             self.trigger_long_press()
