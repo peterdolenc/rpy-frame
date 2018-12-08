@@ -1,6 +1,4 @@
 import os
-import random
-import threading
 import time
 
 from io_thread.thread_context import ThreadContext
@@ -16,10 +14,10 @@ class IoMain():
             import RPi.GPIO as GPIO
             from io_thread.button_handler import ButtonHandler
             GPIO.setmode(GPIO.BOARD)
-            GPIO.setup(self.settings.phisical_button_pin, GPIO.IN)
-            cb = ButtonHandler(self.settings.phisical_button_pin, self.button_handler, bouncetime=100)
+            GPIO.setup(self.settings.physical_button_pin, GPIO.IN)
+            cb = ButtonHandler(self.settings.physical_button_pin, self.button_handler, bouncetime=100)
             cb.start()
-            GPIO.add_event_detect(self.settings.phisical_button_pin, GPIO.RISING, callback=cb)
+            GPIO.add_event_detect(self.settings.physical_button_pin, GPIO.RISING, callback=cb)
 
         while True:
             time.sleep(0.1)
