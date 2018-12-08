@@ -117,7 +117,7 @@ class ImageRenderer:
         image_fitment = ImageFitment(self.screen_dimensions)
         image_fitment.end_position = end_position
         image_fitment.current_fitment = current_fitment
-        image_fitment.current_image = ImageHelper.resize(image, (resize_width, resize_height), self.settings.border_inner if use_inner_border else 0)
+        image_fitment.current_image = ImageHelper.resize(image, (resize_width, resize_height), self.settings.border_inner if use_inner_border else 0, self.settings.inner_border_color)
 
         if self.screen_dimensions[0] > image_fitment.current_image.get_width():
             free_space = self.screen_dimensions[0] - image_fitment.current_image.get_width()

@@ -7,8 +7,8 @@ from file_loader import FileLoader
 from gui import Gui
 from image_helper import ImageHelper
 from image_renderer import ImageRenderer
+from io_thread.thread_context import ThreadContext
 from settings import Settings
-from thread_context import ThreadContext
 
 
 class SlideshowPresenter:
@@ -21,6 +21,9 @@ class SlideshowPresenter:
         self.image_renderer = ImageRenderer(settings, gui)
         self.background_helper = BackgroundHelper(gui.get_screen_resolution(), settings)
         self.thread_context = thread_context
+        self.go_next = False
+
+        self.thread_context.button_long_press_handlers.append(self.long_press_handler)
 
     # presents (indefinitely)
     def present(self):
@@ -61,10 +64,14 @@ class SlideshowPresenter:
 
     # checks if right arrow key button was presed
     def check_for_next(self):
-        if self.thread_context.button_pressed:
-            print("Button press detected.")
-            self.thread_context.button_pressed = False
+        if self.go_next:
+            self.go_next = False
             return True
         else:
             keys = pygame.key.get_pressed()
             return keys[pygame.K_RIGHT] or keys[pygame.HAT_RIGHT]
+
+    # longpress handler that moves image next
+    def long_press_handler(self):
+        print("Button press detected.")
+        self.go_next = True

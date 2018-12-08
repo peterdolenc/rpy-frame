@@ -53,8 +53,9 @@ class Settings:
         # Outer border is only displayed on the sides where there is no real screen border
         # It's color should therefore match the color of the material around the screen
         self.outer_border_color = (231, 231, 223)
-        self.border_inner: int = 0
-        self.border_outer: int = 12
+        self.inner_border_color = (231, 231, 223)
+        self.border_inner: int = 6
+        self.border_outer: int = 6
 
         # Blur background
         self.blur_background = True
@@ -62,6 +63,10 @@ class Settings:
 
         # Whether to display date in top-left corner
         self.display_date: bool = False
+
+        # Physical button RPI
+        self.physical_button_pin = 23
+        self.physical_button_longpress_duration = 1000
 
 
 
