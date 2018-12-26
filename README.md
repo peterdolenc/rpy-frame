@@ -1,12 +1,12 @@
 # RPy-Frame
 RPy-Frame is a python software made for Raspberry PI that enables you to make your own awesome-looking budget digital photo frame.
 
-![](screens/photo-frame-front.jpg =500x)
+![](screens/photo-frame-front.jpg)
 
 ### Screens
-![](screens/screen1.jpg =290x)
-![](screens/screen2.jpg =290x)
-![](screens/screen3.jpg =290x)
+![](screens/screen1.jpg)
+![](screens/screen2.jpg)
+![](screens/screen3.jpg)
 
 ### Highlights & features
 - Makes a slideshow of your photos, where each image is displayed for a configured amount of time
@@ -116,7 +116,7 @@ Missing component is the screen. There are generally two approaches.
 1. You buy used PC screen: this is the best and by far the simplest approach. The screen will already come with the panel, the driver board, backlighting and power adaptor. Be careful to find one that uses slim components (most of them do). This is suitable, if you are building a large photo frame. I really like my 24" inch photo frame. And one more tip: you must go for LED IPS screen if you value your photos. You will thank me later.
 2. You have a spare screen from an old laptop you would like to use. This is going to be more difficult as you will have to source the backlighting driver, power adaptor and the driver-board yourself. Search ebay for a good board where your EXACT model of the screen panel is listed as supported. Universal boards only gave me TONS of headaches.
 
-![](screens/photo-frame-back.jpg =500px)
+![](screens/photo-frame-back.jpg)
 
 # Credits:
 
