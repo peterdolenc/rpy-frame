@@ -6,7 +6,6 @@ class Gui:
 
     def __init__(self, settings: Settings):
         self.settings = settings
-        pygame.init()
         self.mode = max(pygame.display.list_modes())
         # for testing on macbook
         if settings.dev_mode:

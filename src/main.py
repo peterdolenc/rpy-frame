@@ -1,5 +1,9 @@
 #!/usr/bin/env python3.6
 import _thread
+import os
+
+import pygame
+
 from entities.image_library import ImageLibrary
 from file_loader import FileLoader
 from gui import Gui
@@ -23,10 +27,11 @@ def parse_cmd_args(settings: Settings):
 
 
 def main():
+    pygame.init()
     settings = Settings()
     thread_context = ThreadContext(settings)
-
-    _thread.start_new_thread(start_io_thread, (thread_context,))
+    thread_context.button_quit_handlers.append(lambda: os._exit(0))
+    _thread.start_new_thread(start_io_thread, (thread_context, pygame))
 
     # main thread
     start_presentation_thread(thread_context)
@@ -43,11 +48,11 @@ def start_presentation_thread(thread_context):
     slideshow_presenter.present()
 
 
-def start_io_thread(thread_context: ThreadContext):
+def start_io_thread(thread_context: ThreadContext, pygame: pygame):
     def short_press_handler():
         thread_context.settings.display_date = not thread_context.settings.display_date
     thread_context.button_short_press_handlers.append(short_press_handler)
-    io_main = IoMain(thread_context)
+    io_main = IoMain(thread_context, pygame)
     io_main.start()
 
 

@@ -28,7 +28,7 @@ class BackgroundHelper:
 
         if random.random() > 0.5:
             surface = self.pattern_generator.playful_circles(*hex_colors, animation, self.settings.background_ppi, self.settings.background_alpha, self.settings.background_lightness,
-                                                             blur=self.settings.blur_background, blur_radius=self.settings.blur_background_radius)
+                                                             blur=self.settings.blur_background, blur_radius=self.settings.blur_background_radius*0.75)
 
         else:
             surface = self.pattern_generator.astro_stars(*hex_colors, animation, self.settings.background_ppi, self.settings.background_alpha, self.settings.background_lightness,

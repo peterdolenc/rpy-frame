@@ -23,7 +23,7 @@ class SlideshowPresenter:
         self.thread_context = thread_context
         self.go_next = False
 
-        self.thread_context.button_long_press_handlers.append(self.long_press_handler)
+        self.thread_context.button_long_press_handlers.append(self.next_image_handler)
 
     # presents (indefinitely)
     def present(self):
@@ -41,37 +41,22 @@ class SlideshowPresenter:
         fitment.current_background = self.background_helper.get_dominant_pattern(dominant_colors)
         start_time = pygame.time.get_ticks()
         duration_millis = self.settings.duration * 1000
-        upper_text = image_meta.date.strftime("%d %B %Y %H:%M") if self.settings.display_date else None
+        date_text = image_meta.date.strftime("%d %B %Y %H:%M")
 
         while pygame.time.get_ticks() < start_time + duration_millis:
             elapsed_time = pygame.time.get_ticks() - start_time
             progress_state = min(elapsed_time / duration_millis, 1.0)
             # fitment.current_background = self.background_helper.get_dominant_pattern(dominant_colors, progress_state)
+            upper_text = date_text if self.settings.display_date else None
             self.image_renderer.draw(progress_state, fitment, upper_text)
             elapsed_time_after = pygame.time.get_ticks() - start_time
-            self.check_for_quit()
-            if self.check_for_next():
+            if self.go_next:
+                self.go_next = False
                 break
             additional_delay = max(0, (50 - (elapsed_time_after - elapsed_time)))
             pygame.time.wait(additional_delay)
 
-    # checks if quit buttons were pressed
-    def check_for_quit(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE] or keys[pygame.K_SPACE] or keys[pygame.K_q] or keys[pygame.K_x] or keys[
-            pygame.K_z]:
-            exit(0)
-
-    # checks if right arrow key button was presed
-    def check_for_next(self):
-        if self.go_next:
-            self.go_next = False
-            return True
-        else:
-            keys = pygame.key.get_pressed()
-            return keys[pygame.K_RIGHT] or keys[pygame.HAT_RIGHT]
-
     # longpress handler that moves image next
-    def long_press_handler(self):
-        print("Button press detected.")
+    def next_image_handler(self):
+        print("Advancing to the next image...")
         self.go_next = True
