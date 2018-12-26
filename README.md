@@ -1,12 +1,12 @@
 # RPy-Frame
 RPy-Frame is a python software made for Raspberry PI that enables you to make your own awesome-looking budget digital photo frame.
 
-![](screens/photo-frame-front.jpg)
+![](screens/photo-frame-front.jpg =500x)
 
 ### Screens
-![](screens/screen1.jpg)
-![](screens/screen2.jpg)
-![](screens/screen3.jpg)
+![](screens/screen1.jpg =290x)
+![](screens/screen2.jpg =290x)
+![](screens/screen3.jpg =290x)
 
 ### Highlights & features
 - Makes a slideshow of your photos, where each image is displayed for a configured amount of time
@@ -62,10 +62,6 @@ sudo pip3.6 install --upgrade pip
 sudo pip3.6 install pygame
 sudo pip3.6 install pillow
 sudo pip3.6 install scipy
-sudo pip3.6 install colorthief
-sudo pip3.6 install matplotlib
-sudo pip3.6 install RPi.GPIO
-sudo pip3.6 install dateutil
 ```
 
 # Optional setup
@@ -100,7 +96,7 @@ Consult the building picture frame hardware guide to find out how to make a butt
 
 You can use this little snippet to debug and test your button prior to using it with your app:
 
-```python
+```bash
 import RPi.GPIO as GPIO
 
 # use P1 header pin numbering convention
@@ -120,7 +116,7 @@ Missing component is the screen. There are generally two approaches.
 1. You buy used PC screen: this is the best and by far the simplest approach. The screen will already come with the panel, the driver board, backlighting and power adaptor. Be careful to find one that uses slim components (most of them do). This is suitable, if you are building a large photo frame. I really like my 24" inch photo frame. And one more tip: you must go for LED IPS screen if you value your photos. You will thank me later.
 2. You have a spare screen from an old laptop you would like to use. This is going to be more difficult as you will have to source the backlighting driver, power adaptor and the driver-board yourself. Search ebay for a good board where your EXACT model of the screen panel is listed as supported. Universal boards only gave me TONS of headaches.
 
-![](screens/photo-frame-back.jpg)
+![](screens/photo-frame-back.jpg =500px)
 
 # Credits:
 
