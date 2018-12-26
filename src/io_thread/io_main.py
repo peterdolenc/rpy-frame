@@ -35,7 +35,7 @@ class IoMain():
             left_key.__call__()
             space_key.__call__()
             quit_key.__call__()
-            time.sleep(0.1)
+            time.sleep(0.02)
 
 
     @staticmethod
