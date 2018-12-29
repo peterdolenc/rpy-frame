@@ -62,6 +62,10 @@ sudo pip3.6 install --upgrade pip
 sudo pip3.6 install pygame
 sudo pip3.6 install pillow
 sudo pip3.6 install scipy
+sudo pip3.6 install matplotlib
+sudo pip3.6 install six
+sudo pip3.6 install colorthief
+sudo pip3.6 install RPi.GPIO
 ```
 
 # Optional setup
@@ -84,15 +88,15 @@ Also don't forget to setup your raspi to boot to desktop and configure that "sta
 
 
 ### Turn off the display during the night to save energy
-I used crontab for that. The commands handle raspi's video out and basically get the screen to go to standby. Here are the two crontab commands that will add a schedule to turn off the display every day at 22.00 and turn it back up at 05:00 in the morning. Feel free to adjust to your needs.
+I used crontab for that. The commands handle raspi's video out and basically get the screen to go to standby. Here are the two crontab commands that will add a schedule to turn off the display every day at 22.30 and turn it back up at 05:15 in the morning. Feel free to adjust to your needs.
 
 ```bash
-crontab 0 22 * * * vcgencmd display_power 0 >/dev/null 2>&1
-crontab 0 5 * * * vcgencmd display_power 1 >/dev/null 2>&1
+crontab 30 22 * * * vcgencmd display_power 0 >/dev/null 2>&1
+crontab 15 5 * * * vcgencmd display_power 1 >/dev/null 2>&1
 ```
 
 ### Setting up the phisical button
-Consult the building picture frame hardware guide to find out how to make a button. But generally any pull-up button will work as long as it will read 1 when pressed and 0 when idle. By default the app will expect the button to be connected to GPIO header pin nr. 23. But it can be configured in settings.py.
+Generally any pull-up button will work as long as it will read 1 when pressed and 0 when idle. By default the app will expect the button to be connected to GPIO header pin nr. 23. But it can be configured in settings.py.
 
 You can use this little snippet to debug and test your button prior to using it with your app:
 

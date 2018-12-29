@@ -1,4 +1,6 @@
 import pygame
+
+from file_loader import FileLoader
 from settings import Settings
 
 
@@ -15,7 +17,8 @@ class Gui:
         pygame.display.toggle_fullscreen()
         pygame.mouse.set_visible(False)
         self.screen = pygame.display.get_surface()
-        self.screen.fill((0, 0, 0))
+        self.display_loading_logo()
+
 
     def get_screen_resolution(self):
         return self.mode
@@ -44,6 +47,14 @@ class Gui:
             self.screen.blit(text_bg, (self.mode[0] - text.get_width() - space, space + overlap))
             self.screen.blit(text, (self.mode[0] - text.get_width() - space, space))
 
+        pygame.display.update()
+        pygame.event.pump()
+
+    def display_loading_logo(self, logo_path='../logo.jpg'):
+        file_loader = FileLoader()
+        logo = file_loader.load_image(logo_path)
+        logo = pygame.transform.scale(logo, self.mode)
+        self.screen.blit(logo, (0, 0))
         pygame.display.update()
         pygame.event.pump()
 
