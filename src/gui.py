@@ -1,3 +1,6 @@
+import os
+import sys
+
 import pygame
 
 from file_loader import FileLoader
@@ -50,9 +53,9 @@ class Gui:
         pygame.display.update()
         pygame.event.pump()
 
-    def display_loading_logo(self, logo_path='../logo.jpg'):
+    def display_loading_logo(self, logo_path='/../logo.jpg'):
         file_loader = FileLoader()
-        logo = file_loader.load_image(logo_path)
+        logo = file_loader.load_image(os.path.realpath(sys.path[0]) + logo_path)
         logo = pygame.transform.scale(logo, self.mode)
         self.screen.blit(logo, (0, 0))
         pygame.display.update()
