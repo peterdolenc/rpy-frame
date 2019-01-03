@@ -4,6 +4,8 @@ import pygame
 from typing import List
 import scipy
 import random
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.backends.backend_agg as agg
 import matplotlib.pyplot as plt
 from PIL import Image, ImageFilter
