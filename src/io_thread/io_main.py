@@ -18,9 +18,9 @@ class IoMain():
             from io_thread.phisical_button_handler import PhisicalButtonHandler
             GPIO.setmode(GPIO.BOARD)
             GPIO.setup(self.settings.physical_button_pin, GPIO.IN)
-            cb = PhisicalButtonHandler(self.settings.physical_button_pin, self.button_handler, bouncetime=100)
+            cb = PhisicalButtonHandler(self.settings.physical_button_pin, self.button_handler, bouncetime=50)
             cb.start()
-            GPIO.add_event_detect(self.settings.physical_button_pin, GPIO.RISING, callback=cb)
+            GPIO.add_event_detect(self.settings.physical_button_pin, GPIO.BOTH, callback=cb)
 
         left_key = KeyboardDebouncer(pygame, [pygame.K_RIGHT, pygame.HAT_RIGHT], (lambda _: self.button_handler(self.settings.physical_button_longpress_duration+1)))
         left_key.start()

@@ -47,11 +47,12 @@ class SlideshowPresenter:
             elapsed_time = pygame.time.get_ticks() - start_time
             progress_state = min(elapsed_time / duration_millis, 1.0)
             upper_text = date_text if self.settings.display_date else None
-            if self.go_next:
+            go_next_detected = self.go_next
+            if go_next_detected:
                 upper_text = "Loading next..."
             self.image_renderer.draw(progress_state, fitment, upper_text)
             elapsed_time_after = pygame.time.get_ticks() - start_time
-            if self.go_next:
+            if go_next_detected:
                 self.go_next = False
                 break
             additional_delay = max(0, (50 - (elapsed_time_after - elapsed_time)))
