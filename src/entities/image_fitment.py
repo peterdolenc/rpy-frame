@@ -17,3 +17,4 @@ class ImageFitment:
         self.current_image: pygame.Surface = None
         self.current_background: pygame.Surface = None
         self.alignment = 0
+        self.full_screen = False

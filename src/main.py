@@ -61,11 +61,12 @@ if __name__ == "__main__":
 # TODO:
 # print image comment on screen
 # Enable more backgrounds
-# Optimize dominant color calc and background creation when image is displayed fullscreen
-# Add movie support
+# Super-long-press: skip the whole sequence
+
 
 # TODO / MAYBE
+# Backgrounds where a pattern is made of the current image
+# Add movie support
 # Animated backgrounds?
 # Image transitions?
 # Image effects (2 images merged?)
-# Optimizations?

@@ -22,6 +22,7 @@ class ImageFitter:
         screen_ratio = screen_width / screen_height
         end_position = 0
         use_inner_border = True
+        full_screen = False
 
         resize_width = self.screen_dimensions[0]
         resize_height = self.screen_dimensions[1]
@@ -52,6 +53,7 @@ class ImageFitter:
                 if is_less_than_min_gap_area:
                     resize_width = screen_width
                     use_inner_border = False
+                    full_screen = True
                 elif is_more_than_max_gap_area:
                     resize_width = screen_width * (1.0 - self.settings.portrait_edge_max)
 
@@ -84,6 +86,7 @@ class ImageFitter:
                 if is_less_than_min_gap_area:
                     resize_height = screen_height
                     use_inner_border = False
+                    full_screen = True
 
                 # for above max fitment width is screen width minus the maximum allowed amount of gap area
                 elif is_more_than_max_gap_area:
@@ -95,6 +98,7 @@ class ImageFitter:
         image_fitment = ImageFitment(self.screen_dimensions)
         image_fitment.end_position = end_position
         image_fitment.current_fitment = current_fitment
+        image_fitment.full_screen = full_screen
         image_fitment.current_image = ImageResizer.resize(image, (resize_width, resize_height), self.settings.border_inner if use_inner_border else 0,
                                                          self.settings.inner_border_color)
 

@@ -54,6 +54,7 @@ class ImageLoader(threading.Thread):
     def load_and_fit_image(self, image_meta):
         image = FileLoader.load_image(image_meta.full_path)
         fitment = self.image_fitter.fit_new_image(image)
-        dominant_colors = DominantColorExtractor.get_dominant_colors(image_meta, fitment.current_image)
-        fitment.current_background = self.background_maker.get_dominant_pattern(dominant_colors)
+        if not fitment.full_screen:
+            dominant_colors = DominantColorExtractor.get_dominant_colors(image_meta, fitment.current_image)
+            fitment.current_background = self.background_maker.get_dominant_pattern(dominant_colors)
         return PresentableImage(image_meta, fitment)
