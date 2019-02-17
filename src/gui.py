@@ -3,7 +3,7 @@ import sys
 
 import pygame
 
-from file_loader import FileLoader
+from image_loading_pipeline.helpers.file_loader import FileLoader
 from settings import Settings
 
 
@@ -55,7 +55,7 @@ class Gui:
 
     def display_loading_logo(self, logo_path='/../logo.jpg'):
         file_loader = FileLoader()
-        logo = file_loader.load_image(os.path.realpath(sys.path[0]) + logo_path)
+        logo = FileLoader.load_image(os.path.realpath(sys.path[0]) + logo_path)
         logo = pygame.transform.scale(logo, self.mode)
         self.screen.blit(logo, (0, 0))
         pygame.display.update()

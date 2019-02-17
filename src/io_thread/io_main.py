@@ -3,7 +3,7 @@ import time
 import pygame
 
 from io_thread.keyboard_debouncer import KeyboardDebouncer
-from io_thread.thread_context import ThreadContext
+from thread_context import ThreadContext
 
 
 class IoMain():

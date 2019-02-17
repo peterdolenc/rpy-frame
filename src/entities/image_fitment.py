@@ -16,3 +16,4 @@ class ImageFitment:
         self.end_position: int = 0
         self.current_image: pygame.Surface = None
         self.current_background: pygame.Surface = None
+        self.alignment = 0

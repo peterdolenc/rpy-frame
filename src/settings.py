@@ -68,5 +68,8 @@ class Settings:
         self.physical_button_pin = 23
         self.physical_button_longpress_duration = 1000
 
+        # Prepared images buffer size - how many images are prepared in advance
+        self.prepared_images_buffer_size = 4
+
 
 

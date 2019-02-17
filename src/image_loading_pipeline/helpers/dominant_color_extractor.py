@@ -6,16 +6,7 @@ from colorthief import ColorThief
 from entities.image_meta import ImageMeta
 
 
-class ImageHelper:
-
-    # resizes the image to target dimensions
-    def resize(image: pygame.Surface, dimensions, border: int, border_color) -> pygame.Surface:
-        dimensions = (int(dimensions[0]), int(dimensions[1]))
-        image_surface = pygame.transform.smoothscale(image, (dimensions[0] - 2 * border, dimensions[1] - 2 * border))
-        surface = pygame.Surface(dimensions)
-        surface.fill(border_color)
-        surface.blit(image_surface, (border, border))
-        return surface
+class DominantColorExtractor:
 
     # gets the dominant colors
     # uses color thief to extract them
@@ -24,7 +15,7 @@ class ImageHelper:
         ct = ColorThief(image_meta.full_path)
         colors = ct.get_palette(colour_count, sampling)
         hsvs = [ (*colorsys.rgb_to_hsv(*colors[i]), i) for i in range(len(colors)) ]
-        hsvs.sort(key=lambda c: ImageHelper.grade_color(*c), reverse=True)
+        hsvs.sort(key=lambda c: DominantColorExtractor.grade_color(*c), reverse=True)
         rgbs = [ colorsys.hsv_to_rgb(c[0], c[1], c[2]) for c in hsvs]
         return rgbs
 

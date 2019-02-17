@@ -3,17 +3,28 @@ import PIL.Image
 import PIL.ExifTags
 from datetime import datetime
 from typing import List
+
 from entities.image_meta import ImageMeta
+from image_loading_pipeline.helpers.file_loader import FileLoader
+from thread_context import ThreadContext
 
 
 class ImageLibrary:
 
-    def __init__(self):
+    def __init__(self, thread_context: ThreadContext):
+        self.settings = thread_context.settings
         self.image_metas: List[ImageMeta] = None
         self.count: int = 0
 
+    def discover_images(self, directory: str) -> List[str]:
+        images = FileLoader.get_files_from_directory(directory)
+        print(f'{len(images):d} images discovered.')
+
+        return images
+
     # initializes the image library by detecting metadata and sorting images
-    def initialize(self, image_paths):
+    def initialize(self):
+        image_paths = self.discover_images(self.settings.media_folder)
         self.image_metas = [self.get_image_metadata(image) for image in image_paths]
         self.image_metas.sort(key=lambda im: im.sort_key())
         self.count: int = len(self.image_metas)
@@ -23,6 +34,7 @@ class ImageLibrary:
     # sequence always provides images that are close together
     def get_sequence(self, min_len=4, max_len=8) -> List[ImageMeta]:
         sequence_len = random.randint(min_len, max_len)
+        print(f'Starting a new sequence with length of {sequence_len:d}')
         first_index = random.randint(0, self.count - sequence_len)
         sequence = [self.image_metas[i] for i in range(first_index, first_index + sequence_len)]
         random.shuffle(sequence)

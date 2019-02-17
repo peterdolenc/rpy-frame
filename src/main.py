@@ -1,18 +1,16 @@
 #!/usr/bin/env python3.6
 import _thread
 import os
-
+from queue import Queue
 import pygame
-
-from entities.image_library import ImageLibrary
-from file_loader import FileLoader
 from gui import Gui
+from image_loading_pipeline.image_loader import ImageLoader
 from io_thread.io_main import IoMain
 from settings import Settings
 from slideshow_presenter import SlideshowPresenter
 import sys
 
-from io_thread.thread_context import ThreadContext
+from thread_context import ThreadContext
 
 
 def parse_cmd_args(settings: Settings):
@@ -29,7 +27,9 @@ def parse_cmd_args(settings: Settings):
 def main():
     pygame.init()
     settings = Settings()
-    thread_context = ThreadContext(settings)
+    parse_cmd_args(settings)
+    gui = Gui(settings)
+    thread_context = ThreadContext(settings, gui)
     thread_context.button_quit_handlers.append(lambda: os._exit(0))
     _thread.start_new_thread(start_io_thread, (thread_context, pygame))
 
@@ -37,14 +37,11 @@ def main():
     start_presentation_thread(thread_context)
 
 
-def start_presentation_thread(thread_context):
-    parse_cmd_args(thread_context.settings)
-    gui = Gui(thread_context.settings)
-    file_loader = FileLoader()
-    image_paths = file_loader.discover_images(thread_context.settings.media_folder)
-    image_library = ImageLibrary()
-    image_library.initialize(image_paths)
-    slideshow_presenter = SlideshowPresenter(gui, thread_context.settings, image_library, thread_context)
+def start_presentation_thread(thread_context: ThreadContext):
+    presentable_images_queue = Queue(maxsize=thread_context.settings.prepared_images_buffer_size)
+    image_loader = ImageLoader(thread_context, presentable_images_queue)
+    image_loader.start()
+    slideshow_presenter = SlideshowPresenter(presentable_images_queue, thread_context)
     slideshow_presenter.present()
 
 

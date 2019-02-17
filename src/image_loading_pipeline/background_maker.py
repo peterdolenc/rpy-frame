@@ -2,11 +2,11 @@ import random
 
 import pygame
 from typing import List, Tuple
-from pattern_generator import PatternGenerator
+from image_loading_pipeline.pattern_generator import PatternGenerator
 from settings import Settings
 
 
-class BackgroundHelper:
+class BackgroundMaker:
 
     def __init__(self, display_mode: List[int], settings: Settings):
         self.display_mode = display_mode
