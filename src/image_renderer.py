@@ -12,7 +12,7 @@ class ImageRenderer:
         self.settings: Settings = thread_context.settings
 
     # Draw the image at the correct position regarding to how much time is left
-    def draw(self, progress: float, fitment: ImageFitment, text=None):
+    def draw(self, progress: float, fitment: ImageFitment, upper_text=None, main_text=None):
         elapsed = 1.0 - progress
         center_x = (self.screen_dimensions[0] - fitment.current_image.get_width()) / 2
         center_y = (self.screen_dimensions[1] - fitment.current_image.get_height()) / 2
@@ -20,13 +20,10 @@ class ImageRenderer:
         if self.screen_dimensions[0] > fitment.current_image.get_width():
             center_x = fitment.alignment
 
-        if fitment.current_fitment == Fitment.STILL:
-            self.gui.display_image(fitment.current_image, center_x, center_y, fitment.current_background, text)
-        elif fitment.current_fitment == Fitment.HORIZONTAL_SCROLL:
-            self.gui.display_image(fitment.current_image, int((-1) * fitment.end_position * elapsed), center_y, fitment.current_background, text)
+        if fitment.current_fitment == Fitment.HORIZONTAL_SCROLL:
+            center_x = int((-1) * fitment.end_position * elapsed)
         elif fitment.current_fitment == Fitment.VERTICAL_SCROLL:
-            self.gui.display_image(fitment.current_image, center_x, int(-1 * fitment.end_position * elapsed), fitment.current_background, text)
+            center_y = int(-1 * fitment.end_position * elapsed)
 
-
-
+        self.gui.display_image(fitment.current_image, center_x, center_y, fitment.current_background, upper_text, main_text)
 

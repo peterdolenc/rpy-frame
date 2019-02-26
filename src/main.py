@@ -48,6 +48,7 @@ def start_presentation_thread(thread_context: ThreadContext):
 def start_io_thread(thread_context: ThreadContext, pygame: pygame):
     def short_press_handler():
         thread_context.settings.display_date = not thread_context.settings.display_date
+        thread_context.settings.display_comment = thread_context.settings.display_date
     thread_context.button_short_press_handlers.append(short_press_handler)
     io_main = IoMain(thread_context, pygame)
     io_main.start()
@@ -59,13 +60,13 @@ if __name__ == "__main__":
 
 
 # TODO:
-# print image comment on screen
-# Enable more backgrounds
 # Super-long-press: skip the whole sequence
 
 
 # TODO / MAYBE
+# Layout where image is on the side and on the other side the date and the caption are displaye
 # Backgrounds where a pattern is made of the current image
+# Enable more backgrounds
 # Add movie support
 # Animated backgrounds?
 # Image transitions?
