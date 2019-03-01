@@ -48,7 +48,7 @@ def start_presentation_thread(thread_context: ThreadContext):
 def start_io_thread(thread_context: ThreadContext, pygame: pygame):
     def short_press_handler():
         thread_context.settings.display_date = not thread_context.settings.display_date
-        thread_context.settings.display_comment = thread_context.settings.display_date
+        thread_context.settings.display_caption = thread_context.settings.display_date
     thread_context.button_short_press_handlers.append(short_press_handler)
     io_main = IoMain(thread_context, pygame)
     io_main.start()
@@ -61,6 +61,8 @@ if __name__ == "__main__":
 
 # TODO:
 # Super-long-press: skip the whole sequence
+# Read camera/lens information and display it
+# Transition when changing image
 
 
 # TODO / MAYBE

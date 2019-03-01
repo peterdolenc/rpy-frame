@@ -70,7 +70,7 @@ class Settings:
         self.physical_button_longpress_duration = 600
 
         # Prepared images buffer size - how many images are prepared in advance
-        self.prepared_images_buffer_size = 4
+        self.prepared_images_buffer_size = 10
 
         # Target line length for image comment
         # After target length comment will be broken into new line at the first space

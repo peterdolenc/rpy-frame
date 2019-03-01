@@ -3,7 +3,7 @@ import PIL.Image
 import PIL.ExifTags
 from datetime import datetime
 from typing import List
-
+from bs4 import BeautifulSoup
 from entities.image_meta import ImageMeta
 from image_loading_pipeline.helpers.file_loader import FileLoader
 from thread_context import ThreadContext
@@ -49,7 +49,21 @@ class ImageLibrary:
             image_meta.date = self.get_date_from_exif(exif_data)
         if image_meta.date is None:
             print('[WARNING] Cannot read date EXIF for: '+image_meta.full_path)
+        image_meta.caption = self.get_xmp_title(img)
+
         return image_meta
+
+    # reads XMP data from file and tries to extract the title property
+    def get_xmp_title(self, img):
+        try:
+            for segment, content in img.applist:
+                marker, body = content.split(b'\x00', 1)
+                if marker == b'http://ns.adobe.com/xap/1.0/':
+                    xml = BeautifulSoup(body, features="html.parser")
+                    title_content = xml.find('dc:title').find('rdf:li').string
+                    return title_content
+        except:
+            pass
 
     # gets a proper datetime object from exif list
     def get_date_from_exif(self, exif) -> datetime:
