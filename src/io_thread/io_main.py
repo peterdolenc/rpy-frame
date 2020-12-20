@@ -17,8 +17,8 @@ class IoMain():
             import RPi.GPIO as GPIO
             from io_thread.phisical_button_handler import PhisicalButtonHandler
             GPIO.setmode(GPIO.BOARD)
-            GPIO.setup(self.settings.physical_button_pin, GPIO.IN)
-            cb = PhisicalButtonHandler(self.settings.physical_button_pin, self.button_handler, bouncetime=50)
+            GPIO.setup(self.settings.physical_button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+            cb = PhisicalButtonHandler(self.settings.physical_button_pin, self.button_handler, bouncetime=150)
             cb.start()
             GPIO.add_event_detect(self.settings.physical_button_pin, GPIO.BOTH, callback=cb)
 
