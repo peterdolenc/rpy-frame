@@ -1,5 +1,4 @@
 class Settings:
-
     def __init__(self):
 
         # dev mode
@@ -10,8 +9,8 @@ class Settings:
         self.media_folder: str = "../samples"
 
         # duration in seconds
-        self.duration: int = 600
- 
+        self.duration: int = 1 * 60
+
         # This setting is basically inverted setting how much to zoom-in wide images
         #
         # If image is wider than the screen, then black bars on top and bottom will appear
@@ -75,7 +74,3 @@ class Settings:
         # Target line length for image comment
         # After target length comment will be broken into new line at the first space
         self.image_comment_target_line_length = 100
-
-
-
-
