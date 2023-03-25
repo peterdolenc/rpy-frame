@@ -45,7 +45,8 @@ class SlideshowPresenter:
                 self.go_next = False
                 break
             additional_delay = max(0, (50 - (elapsed_time_after - elapsed_time)))
-            pygame.time.wait(additional_delay)
+            # pygame.time.wait(additional_delay)
+            pygame.time.wait(self.settings.duration)
 
     # longpress handler that moves image next
     def next_image_handler(self):
