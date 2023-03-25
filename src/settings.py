@@ -53,8 +53,8 @@ class Settings:
         # It's color should therefore match the color of the material around the screen
         self.outer_border_color = (231, 231, 223)
         self.inner_border_color = (231, 231, 223)
-        self.border_inner: int = 6
-        self.border_outer: int = 6
+        self.border_inner: int = 0
+        self.border_outer: int = 0
 
         # Blur background
         self.blur_background = True
