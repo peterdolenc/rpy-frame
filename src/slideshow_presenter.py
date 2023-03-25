@@ -4,6 +4,7 @@ from entities.image_meta import ImageMeta
 from image_renderer import ImageRenderer
 from thread_context import ThreadContext
 from settings import Settings
+import time
 
 
 class SlideshowPresenter:
@@ -45,8 +46,8 @@ class SlideshowPresenter:
                 self.go_next = False
                 break
             additional_delay = max(0, (50 - (elapsed_time_after - elapsed_time)))
-            # pygame.time.wait(additional_delay)
-            pygame.time.wait(self.settings.duration)
+            time.sleep(self.settings.duration)
+            pygame.time.wait(additional_delay)
 
     # longpress handler that moves image next
     def next_image_handler(self):
