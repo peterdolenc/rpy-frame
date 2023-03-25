@@ -74,3 +74,6 @@ class Settings:
         # Target line length for image comment
         # After target length comment will be broken into new line at the first space
         self.image_comment_target_line_length = 100
+
+        # Run in full screen
+        self.fullscreen = True

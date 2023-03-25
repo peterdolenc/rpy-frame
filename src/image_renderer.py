@@ -29,6 +29,8 @@ class ImageRenderer:
         # elif fitment.current_fitment == Fitment.VERTICAL_SCROLL:
         # center_y = int(-1 * fitment.end_position * elapsed)
 
+        print(f"center_x {center_x}  center_y {center_y}")
+
         self.gui.display_image(
             fitment.current_image,
             center_x,
