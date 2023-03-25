@@ -64,7 +64,7 @@ sudo pip3.6 install pillow
 sudo pip3.6 install scipy
 sudo pip3.6 install matplotlib
 sudo pip3.6 install six
-sudo pip3.6 install colorthief
+sudo pip3.6 install fast_colorthief
 sudo pip3.6 install RPi.GPIO
 ```
 
