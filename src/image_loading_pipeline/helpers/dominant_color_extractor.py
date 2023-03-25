@@ -1,7 +1,7 @@
 from typing import List, Tuple
 import colorsys
 import pygame
-from colorthief import ColorThief
+import colorthief
 
 from entities.image_meta import ImageMeta
 
@@ -12,7 +12,7 @@ class DominantColorExtractor:
     # uses color thief to extract them
     # then sorts them by color intensity and occurrence
     def get_dominant_colors(image_meta: ImageMeta, image:pygame.Surface, colour_count=8, sampling=10) -> List[Tuple[int]]:
-        ct = ColorThief(image_meta.full_path)
+        ct = colorthief.ColorThief(image_meta.full_path)
         colors = ct.get_palette(colour_count, sampling)
         hsvs = [ (*colorsys.rgb_to_hsv(*colors[i]), i) for i in range(len(colors)) ]
         hsvs.sort(key=lambda c: DominantColorExtractor.grade_color(*c), reverse=True)
