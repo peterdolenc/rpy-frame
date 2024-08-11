@@ -38,11 +38,11 @@ class ImageLoader(threading.Thread):
             try:
                 meta = self.next_image_meta()
                 try:
-                    print("preparing: " + meta.full_path)
+                    print("[bg image loader]: preparing: " + meta.full_path)
                     img = self.load_and_fit_image(meta)
                     self.presentable_images_queue.put(img)
                 except Exception as e:
-                    print("error loading: " + meta.full_path)
+                    print("[bg image loader]: error loading: " + meta.full_path)
                     print(e)
             except Exception as e:
                 print(e)
@@ -64,7 +64,5 @@ class ImageLoader(threading.Thread):
             if self.settings.background_patterns:
                 fitment.current_background = self.background_maker.get_dominant_pattern(dominant_colors)
             else:
-                fitment.current_background = self.background_maker.get_dominant_color_fill(
-        	        dominant_colors
-        	    )
+                fitment.current_background = self.background_maker.get_dominant_color_fill(dominant_colors)
         return PresentableImage(image_meta, fitment)

@@ -17,7 +17,7 @@ class ImageLibrary:
 
     def discover_images(self, directory: str) -> List[str]:
         images = FileLoader.get_files_from_directory(directory)
-        print(f"{len(images):d} images discovered.")
+        print(f"[image discovery]: {len(images):d} images discovered.")
 
         return images
 
@@ -27,7 +27,7 @@ class ImageLibrary:
         self.image_metas = [self.get_image_metadata(image) for image in image_paths]
         self.image_metas.sort(key=lambda im: im.sort_key())
         self.count: int = len(self.image_metas)
-        print(f"{self.count:d} images parsed correctly.")
+        print(f"[image discovery]: {self.count:d} images parsed correctly.")
 
     # creates a new sequence of random length
     # sequence always provides images that are close together
@@ -49,7 +49,7 @@ class ImageLibrary:
         if exif_data is not None:
             image_meta.date = self.get_date_from_exif(exif_data)
         if image_meta.date is None:
-            print("[WARNING] Cannot read date EXIF for: " + image_meta.full_path)
+            print("[image discovery]: [WARNING] Cannot read date EXIF for: " + image_meta.full_path)
         image_meta.caption = self.get_xmp_title(img)
 
         return image_meta

@@ -7,7 +7,7 @@ import pygame
 class FileLoader:
 
     def load_image(image_path: str) -> pygame.Surface:
-        print("Loading " + image_path)
+        print("[bg image loader] loading " + image_path)
         return pygame.image.load(image_path).convert(24)
 
     def get_files_from_directory(path: str) -> List[str]:

@@ -19,8 +19,6 @@ from PIL import Image, ImageFilter
  Might be replaced in the future by pure surfaces solution instead of plotting
 '''
 
-
-
 class PatternGenerator:
 
     def __init__(self, display_mode: List[int]):

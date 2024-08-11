@@ -29,24 +29,21 @@ class SlideshowPresenter:
         date_text = image_meta.date.strftime("%d %B %Y %H:%M")
         caption_text = image_meta.caption
 
+        print("Displaying: " + image_meta.full_path + " on screen.")
+        upper_text = date_text if self.settings.display_date else None
+        date_text if self.settings.display_date else None
+        main_text = caption_text if self.settings.display_caption else None
+        self.image_renderer.draw(fitment, upper_text, main_text)
+
         while pygame.time.get_ticks() < start_time + duration_millis:
-            elapsed_time = pygame.time.get_ticks() - start_time
-            progress_state = min(elapsed_time / duration_millis, 1.0)
-            upper_text = date_text if self.settings.display_date else None
-            date_text if self.settings.display_date else None
-            main_text = caption_text if self.settings.display_caption else None
             go_next_detected = self.go_next
             if go_next_detected:
                 upper_text = "Loading..."
                 main_text = "Next button pressed. Preparing your next image..."
-            self.image_renderer.draw(progress_state, fitment, upper_text, main_text)
-            elapsed_time_after = pygame.time.get_ticks() - start_time
-            if go_next_detected:
+                self.image_renderer.draw(fitment, upper_text, main_text)
                 self.go_next = False
                 break
-            additional_delay = max(0, (50 - (elapsed_time_after - elapsed_time)))
-            #time.sleep(self.settings.duration)
-            pygame.time.wait(additional_delay)
+            pygame.time.wait(50)
 
     # longpress handler that moves image next
     def next_image_handler(self):
