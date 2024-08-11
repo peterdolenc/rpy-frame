@@ -21,7 +21,7 @@ class BackgroundMaker:
     def get_dominant_color_fill(self, colors: List[Tuple[int]]) -> pygame.Surface:
         surface = pygame.Surface(self.display_mode)
         surface.fill(colors[0])
-        return surface
+        return surface.convert()
 
     def get_dominant_pattern(self, colors: List[Tuple[int]], animation=None) -> pygame.Surface:
         hex_colors = (self.to_hex(c) for c in colors[:5])
@@ -34,6 +34,6 @@ class BackgroundMaker:
             surface = self.pattern_generator.astro_stars(*hex_colors, animation, self.settings.background_ppi, self.settings.background_alpha, self.settings.background_lightness,
                                                          blur=self.settings.blur_background, blur_radius=self.settings.blur_background_radius)
 
-        return surface
+        return surface.convert()
 
 

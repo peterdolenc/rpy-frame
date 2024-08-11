@@ -33,7 +33,6 @@ class ImageLoader(threading.Thread):
     # initializes the image library by detecting metadata and sorting images
     def run(self):
         self.current_sequence = self.image_library.get_sequence()
-
         while not self.stop_request.isSet():
             try:
                 meta = self.next_image_meta()
@@ -58,9 +57,7 @@ class ImageLoader(threading.Thread):
         image = FileLoader.load_image(image_meta.full_path)
         fitment = self.image_fitter.fit_new_image(image)
         if not fitment.full_screen:
-            dominant_colors = DominantColorExtractor.get_dominant_colors(
-                image_meta, fitment.current_image
-            )
+            dominant_colors = DominantColorExtractor.get_dominant_colors(image_meta, fitment.current_image)
             if self.settings.background_patterns:
                 fitment.current_background = self.background_maker.get_dominant_pattern(dominant_colors)
             else:

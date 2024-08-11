@@ -10,9 +10,7 @@ class ImageRenderer:
         self.screen_dimensions = self.gui.get_screen_resolution()
         self.settings: Settings = thread_context.settings
 
-    def draw(
-        self, fitment: ImageFitment, upper_text=None, main_text=None
-    ):
+    def draw(self, fitment: ImageFitment, upper_text=None, main_text=None):
         center_x = (self.screen_dimensions[0] - fitment.current_image.get_width()) / 2
         center_y = (self.screen_dimensions[1] - fitment.current_image.get_height()) / 2
 
