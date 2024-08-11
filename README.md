@@ -59,9 +59,9 @@ sudo apt-get update
 sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libfreetype6-dev python3-setuptools python3-dev python3 libportmidi-dev
 sudo apt-get install python3-numpy libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsmpeg-dev libavformat-dev libswscale-dev libjpeg-dev
 sudo pip3 install --upgrade pip
-sudo pip3 install pygame
+sudo pip3 install pygame-ce
 sudo pip3 install pillow
-sudo pip3 install scipy
+sudo pip3 install numpy
 sudo pip3 install matplotlib
 sudo pip3 install six
 sudo pip3 install fast_colorthief
@@ -111,6 +111,9 @@ On bookworm or newer you can use these instead:
 crontab 30 22 * * * xrandr --output HDMI-1 --off >/dev/null 2>&1
 crontab 15 5 * * * xrandr --output HDMI-1 --auto >/dev/null 2>&1
 ```
+
+Or use the script posted by p1r473 here:
+https://forums.raspberrypi.com/viewtopic.php?p=2193330&hilit=ddcontrol#p2193326
 
 ### Setting up the phisical button
 Generally any pull-up button will work as long as it will read 1 when pressed and 0 when idle. By default the app will expect the button to be connected to GPIO header pin nr. 23. But it can be configured in settings.py.
