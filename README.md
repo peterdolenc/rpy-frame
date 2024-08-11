@@ -22,7 +22,7 @@ RPy-Frame is a python software made for Raspberry PI that enables you to make yo
 
 You can run the presentation by executing the following:
 ```bash
-python3.6 main.py /path/to/your/images/dir
+python3 main.py /path/to/your/images/dir
 ```
 You can always press Q or Esc during the presentation to stop it (to quit the app). If you don't specify the path to the images, then samples dir will be used.
 
@@ -30,12 +30,12 @@ If you want to explore configuration options of the app, then edit settings.py f
 
 You can run the program on your PC/Mac as well. Then you can use Q key to exit presentation or space to simulate the phisical button. On PC it's suggested to run it in dev/demo mode:
 ```bash
-python3.6 main.py dev
+python3 main.py dev
 ```
 
 # Installation
-### Python 3.6
-rpy-frame needs Python 3.6 to run. If you are using Raspberry PI, chances are you don’t have it yet and it might not be available through the apt package. Follow this guide to install it:
+### Python 3
+rpy-frame needs Python 3 to run. If you are using Raspberry PI, chances are you don’t have it yet and it might not be available through the apt package. Follow this guide to install it:
 https://gist.github.com/dschep/24aa61672a2092246eaca2824400d37f
 
 ### Clone the repository
@@ -48,7 +48,7 @@ git clone https://github.com/peterdolenc/rpy-frame.git
 Try running it
 ```bash
 cd rpy-frame/src
-python3.6 main.py
+python3 main.py
 ```
 
 ### Install python packages
@@ -58,14 +58,14 @@ Probably you will need to install all the missing python packages first. For me 
 sudo apt-get update
 sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libfreetype6-dev python3-setuptools python3-dev python3 libportmidi-dev
 sudo apt-get install python3-numpy libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsmpeg-dev libavformat-dev libswscale-dev libjpeg-dev
-sudo pip3.6 install --upgrade pip
-sudo pip3.6 install pygame
-sudo pip3.6 install pillow
-sudo pip3.6 install scipy
-sudo pip3.6 install matplotlib
-sudo pip3.6 install six
-sudo pip3.6 install fast_colorthief
-sudo pip3.6 install RPi.GPIO
+sudo pip3 install --upgrade pip
+sudo pip3 install pygame
+sudo pip3 install pillow
+sudo pip3 install scipy
+sudo pip3 install matplotlib
+sudo pip3 install six
+sudo pip3 install fast_colorthief
+sudo pip3 install RPi.GPIO
 ```
 
 # Optional setup
@@ -84,6 +84,16 @@ There are multiple ways to configure auto start of an app when UI starts. I foun
 @/home/pi/slideshow.sh
 ```
 
+For bookworm or newer add this file instead - /etc/xdg/autostart/rpy.desktop:
+
+```bash
+[Desktop Entry]
+Type=Application
+Exec=/home/peter/slideshow.sh
+Hidden=false
+NoDisplay=false
+```
+
 Also don't forget to setup your raspi to boot to desktop and configure that "start bar" to auto.hide. This will give you the full "kiosk mode" experience.
 
 
@@ -93,6 +103,13 @@ I used crontab for that. The commands handle raspi's video out and basically get
 ```bash
 crontab 30 22 * * * vcgencmd display_power 0 >/dev/null 2>&1
 crontab 15 5 * * * vcgencmd display_power 1 >/dev/null 2>&1
+```
+
+On bookworm or newer you can use these instead:
+
+```bash
+crontab 30 22 * * * xrandr --output HDMI-1 --off >/dev/null 2>&1
+crontab 15 5 * * * xrandr --output HDMI-1 --auto >/dev/null 2>&1
 ```
 
 ### Setting up the phisical button

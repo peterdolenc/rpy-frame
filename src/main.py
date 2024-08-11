@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/python3
 import _thread
 import os
 from queue import Queue

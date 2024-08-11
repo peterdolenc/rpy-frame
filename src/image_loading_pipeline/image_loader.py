@@ -61,8 +61,10 @@ class ImageLoader(threading.Thread):
             dominant_colors = DominantColorExtractor.get_dominant_colors(
                 image_meta, fitment.current_image
             )
-            # fitment.current_background = self.background_maker.get_dominant_pattern(dominant_colors)
-            fitment.current_background = self.background_maker.get_dominant_color_fill(
-                dominant_colors
-            )
+            if self.settings.background_patterns:
+                fitment.current_background = self.background_maker.get_dominant_pattern(dominant_colors)
+            else:
+                fitment.current_background = self.background_maker.get_dominant_color_fill(
+        	        dominant_colors
+        	    )
         return PresentableImage(image_meta, fitment)

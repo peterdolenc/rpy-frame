@@ -1,6 +1,9 @@
 class Settings:
     def __init__(self):
-
+		
+        # Run in full screen
+        self.fullscreen = True
+        
         # dev mode
         self.dev_mode: bool = False
 
@@ -20,8 +23,8 @@ class Settings:
         # Max controls the images that are way wider than the screen and determines how much these will be
         # zoomed out (black bars) in desire to fit them on one screen.
         # Max 0.6 will allow only 40% of the screen to be taken by the image (very thin/wide image)
-        self.wide_edge_max: float = 0.2
-        self.wide_edge_min: float = 0.1
+        self.wide_edge_max: float = 0.9
+        self.wide_edge_min: float = 0.0
 
         # This setting is basically inverted setting for how much to zoom-in portrait images
         #
@@ -32,8 +35,8 @@ class Settings:
         # Max controls the images that are way taller than the screen and determines how much these will be
         # zoomed out (black bars) in desire to fit them on one screen.
         # Max 0.6 will allow only 40% of the screen to be taken by the image (normal portrait image on 16:9 screen)
-        self.portrait_edge_max: float = 0.5
-        self.portrait_edge_min: float = 0.05
+        self.portrait_edge_max: float = 0.9
+        self.portrait_edge_min: float = 0.0
 
         # Alpha value of the background - colors of the background will not be as strong as the colors of the photo
         # They will be projected against neutral gray that is controlled by background_lightness and where 0.5 means 50% gray
@@ -56,13 +59,14 @@ class Settings:
         self.border_inner: int = 0
         self.border_outer: int = 0
 
-        # Blur background
+        # background
+        self.background_patterns = True
         self.blur_background = True
-        self.blur_background_radius = 5
+        self.blur_background_radius = 6
 
         # Whether to display date in top-left corner and caption in main content
-        self.display_date: bool = False
-        self.display_caption: bool = False
+        self.display_date: bool = True
+        self.display_caption: bool = True
 
         # Physical button RPI
         self.physical_button_pin = 23
@@ -75,5 +79,4 @@ class Settings:
         # After target length comment will be broken into new line at the first space
         self.image_comment_target_line_length = 100
 
-        # Run in full screen
-        self.fullscreen = True
+ 
