@@ -4,10 +4,10 @@ from entities.image_meta import ImageMeta
 from image_renderer import ImageRenderer
 from thread_context import ThreadContext
 from settings import Settings
+import time
 
 
 class SlideshowPresenter:
-
     def __init__(self, presentable_images_queue: Queue, thread_context: ThreadContext):
         self.settings: Settings = thread_context.settings
         self.presentable_images_queue: Queue = presentable_images_queue
@@ -26,13 +26,15 @@ class SlideshowPresenter:
     def present_image(self, image_meta: ImageMeta, fitment):
         start_time = pygame.time.get_ticks()
         duration_millis = self.settings.duration * 1000
-        date_text = image_meta.date.strftime("%d %B %Y %H:%M")
+        # date_text = image_meta.date.strftime("%d %B %Y %H:%M")
         caption_text = image_meta.caption
 
         while pygame.time.get_ticks() < start_time + duration_millis:
             elapsed_time = pygame.time.get_ticks() - start_time
             progress_state = min(elapsed_time / duration_millis, 1.0)
-            upper_text = date_text if self.settings.display_date else None
+            # upper_text = date_text if self.settings.display_date else None
+            upper_text = ""
+            # date_text if self.settings.display_date else None
             main_text = caption_text if self.settings.display_caption else None
             go_next_detected = self.go_next
             if go_next_detected:
@@ -44,6 +46,7 @@ class SlideshowPresenter:
                 self.go_next = False
                 break
             additional_delay = max(0, (50 - (elapsed_time_after - elapsed_time)))
+            time.sleep(self.settings.duration)
             pygame.time.wait(additional_delay)
 
     # longpress handler that moves image next

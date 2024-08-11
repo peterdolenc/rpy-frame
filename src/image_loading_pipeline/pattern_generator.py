@@ -1,22 +1,24 @@
-import PIL
 import math
-import pygame
-from typing import List
-import scipy
 import random
+from typing import List
+
 import matplotlib
+import numpy as np
+import PIL
+import pygame
+
 matplotlib.use('Agg')
 import matplotlib.backends.backend_agg as agg
 import matplotlib.pyplot as plt
-from PIL import Image, ImageFilter
 from matplotlib import patches
+from PIL import Image, ImageFilter
 
 '''
  Idea and base for the code taken from: https://github.com/eleanorlutz/AnimatedPythonPatterns/blob/master/PatternMaker.ipynb
  But quite heavily modified
  Might be replaced in the future by pure surfaces solution instead of plotting
 '''
-ar = scipy.array
+
 
 
 class PatternGenerator:
@@ -178,10 +180,10 @@ class PatternGenerator:
         return surf
 
     @staticmethod
-    def Rotate2D(pts, cnt, ang=scipy.pi / 4):
+    def Rotate2D(pts, cnt, ang=np.pi / 4):
         '''pts = {} Rotates points(nx2) about center cnt(2) by angle ang(1) in radian'''
-        return scipy.dot(pts - cnt, ar([[scipy.cos(ang), scipy.sin(ang)],
-                                        [-scipy.sin(ang), scipy.cos(ang)]])) + cnt
+        return np.dot(pts - cnt, np.array([[np.cos(ang), np.sin(ang)],
+                                        [-np.sin(ang), np.cos(ang)]])) + cnt
 
     @staticmethod
     def solveForLeg(h, leg1):
@@ -226,7 +228,7 @@ class PatternGenerator:
         pts2 = PatternGenerator.side4(math.sqrt(2) * w - e, oX, oY, c)
         del pts2[-1]
         del pts2[-1]
-        ots = PatternGenerator.Rotate2D(pts2, ar([oX, oY]), 45 * scipy.pi / 180).tolist()
+        ots = PatternGenerator.Rotate2D(pts2, np.array([oX, oY]), 45 * np.pi / 180).tolist()
         return ([pts[0], ots[0], pts[3], ots[3], pts[2],
                  ots[2], pts[1], ots[1], [oX, oY], c])
 
@@ -238,7 +240,7 @@ class PatternGenerator:
         pts2 = PatternGenerator.side6(w - e, oX, oY, c)
         del pts2[-1]
         del pts2[-1]
-        ots = PatternGenerator.Rotate2D(pts2, ar([oX, oY]), 30 * scipy.pi / 180).tolist()
+        ots = PatternGenerator.Rotate2D(pts2, np.array([oX, oY]), 30 * np.pi / 180).tolist()
         return ([pts[0], ots[0], pts[5], ots[5], pts[4], ots[4],
                  pts[3], ots[3], pts[2], ots[2], pts[1], ots[1], [oX, oY], c])
 
@@ -253,12 +255,12 @@ class PatternGenerator:
         del newPoints[-1]
         del newPoints[-1]
 
-        pts = ar(newPoints)
-        radians = degrees * scipy.pi / 180
+        pts = np.array(newPoints)
+        radians = degrees * np.pi / 180
         origin = (origin[0] + cx, origin[1]+cy)
 
         pts2 = [(p[0] + cx, p[1] +cy) for p in pts]
-        ots = PatternGenerator.Rotate2D(pts2, ar([origin]), radians)
+        ots = PatternGenerator.Rotate2D(pts2, np.array([origin]), radians)
 
         sub1.add_patch(patches.Polygon(ots, fc=color, ec=ec,
                                        alpha=alphaParam, joinstyle=jn, lw=l, rasterized=True))

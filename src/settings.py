@@ -1,5 +1,4 @@
 class Settings:
-
     def __init__(self):
 
         # dev mode
@@ -10,8 +9,8 @@ class Settings:
         self.media_folder: str = "../samples"
 
         # duration in seconds
-        self.duration: int = 600
- 
+        self.duration: int = 1 * 60
+
         # This setting is basically inverted setting how much to zoom-in wide images
         #
         # If image is wider than the screen, then black bars on top and bottom will appear
@@ -54,8 +53,8 @@ class Settings:
         # It's color should therefore match the color of the material around the screen
         self.outer_border_color = (231, 231, 223)
         self.inner_border_color = (231, 231, 223)
-        self.border_inner: int = 6
-        self.border_outer: int = 6
+        self.border_inner: int = 0
+        self.border_outer: int = 0
 
         # Blur background
         self.blur_background = True
@@ -76,6 +75,5 @@ class Settings:
         # After target length comment will be broken into new line at the first space
         self.image_comment_target_line_length = 100
 
-
-
-
+        # Run in full screen
+        self.fullscreen = True

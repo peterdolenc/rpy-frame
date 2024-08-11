@@ -3,7 +3,9 @@ from queue import Queue
 
 from entities.presentable_image import PresentableImage
 from image_loading_pipeline.background_maker import BackgroundMaker
-from image_loading_pipeline.helpers.dominant_color_extractor import DominantColorExtractor
+from image_loading_pipeline.helpers.dominant_color_extractor import (
+    DominantColorExtractor,
+)
 from image_loading_pipeline.helpers.file_loader import FileLoader
 from image_loading_pipeline.image_fitter import ImageFitter
 from image_loading_pipeline.image_library import ImageLibrary
@@ -12,7 +14,6 @@ from settings import Settings
 
 
 class ImageLoader(threading.Thread):
-
     def __init__(self, thread_context: ThreadContext, presentable_images_queue: Queue):
         super(ImageLoader, self).__init__()
         self.settings: Settings = thread_context.settings
@@ -20,7 +21,9 @@ class ImageLoader(threading.Thread):
         self.image_fitter = ImageFitter(thread_context)
         self.image_library = ImageLibrary(thread_context)
         self.image_library.initialize()
-        self.background_maker = BackgroundMaker(self.gui.get_screen_resolution(), self.settings)
+        self.background_maker = BackgroundMaker(
+            self.gui.get_screen_resolution(), self.settings
+        )
         self.presentable_images_queue = presentable_images_queue
         self.stop_request = threading.Event()
 
@@ -35,11 +38,11 @@ class ImageLoader(threading.Thread):
             try:
                 meta = self.next_image_meta()
                 try:
-                    print('preparing: ' + meta.full_path)
+                    print("preparing: " + meta.full_path)
                     img = self.load_and_fit_image(meta)
                     self.presentable_images_queue.put(img)
                 except Exception as e:
-                    print('error loading: ' + meta.full_path)
+                    print("error loading: " + meta.full_path)
                     print(e)
             except Exception as e:
                 print(e)
@@ -55,6 +58,11 @@ class ImageLoader(threading.Thread):
         image = FileLoader.load_image(image_meta.full_path)
         fitment = self.image_fitter.fit_new_image(image)
         if not fitment.full_screen:
-            dominant_colors = DominantColorExtractor.get_dominant_colors(image_meta, fitment.current_image)
-            fitment.current_background = self.background_maker.get_dominant_pattern(dominant_colors)
+            dominant_colors = DominantColorExtractor.get_dominant_colors(
+                image_meta, fitment.current_image
+            )
+            # fitment.current_background = self.background_maker.get_dominant_pattern(dominant_colors)
+            fitment.current_background = self.background_maker.get_dominant_color_fill(
+                dominant_colors
+            )
         return PresentableImage(image_meta, fitment)

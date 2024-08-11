@@ -18,6 +18,7 @@ def parse_cmd_args(settings: Settings):
         if sys.argv[1] == 'dev':
             settings.dev_mode = True
             settings.duration = 20
+            settings.fullscreen = False
             print("Running in dev mode.")
         else:
             settings.media_folder = sys.argv[1]
