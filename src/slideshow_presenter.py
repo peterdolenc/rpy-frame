@@ -33,7 +33,6 @@ class SlideshowPresenter:
             elapsed_time = pygame.time.get_ticks() - start_time
             progress_state = min(elapsed_time / duration_millis, 1.0)
             upper_text = date_text if self.settings.display_date else None
-            upper_text = ""
             date_text if self.settings.display_date else None
             main_text = caption_text if self.settings.display_caption else None
             go_next_detected = self.go_next
