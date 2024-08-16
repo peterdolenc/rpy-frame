@@ -26,7 +26,7 @@ class ImageRenderer:
             main_text,
         )
         
-        time.sleep(1)
+        time.sleep(0.01)
 
         self.gui.display_image(
             fitment.current_image,
