@@ -12,18 +12,18 @@ class Settings:
         self.media_folder: str = "../samples"
 
         # duration in seconds
-        self.duration: int = 1 * 60
+        self.duration: int = 10 * 60
 
         # Alpha value of the background - colors of the background will not be as strong as the colors of the photo
         # They will be projected against neutral gray that is controlled by background_lightness and where 0.5 means 50% gray
-        self.background_alpha: float = 0.15
+        self.background_alpha: float = 0.1
         self.background_lightness: float = 0.0
 
         # PPI (pixels per inch) of the background
         # Lower values will result in more repetitions of the background patterns
-        self.background_ppi: int = 400
-        self.background_amount_min: float = 0.2
-        self.background_amount_max: float = 0.6
+        self.background_ppi: int = 300
+        self.background_amount_min: float = 0.3
+        self.background_amount_max: float = 0.7
 
         # Border thicknesses and colors
         # Inner border is considered part of the picture and is always black

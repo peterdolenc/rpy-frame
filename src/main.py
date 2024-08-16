@@ -5,7 +5,7 @@ from queue import Queue
 import pygame
 from gui import Gui
 from image_loading_pipeline.image_loader import ImageLoader
-from io_thread.io_main import IoMain
+from button_handlers.io_hub import IoHub
 from settings import Settings
 from slideshow_presenter import SlideshowPresenter
 import sys
@@ -31,30 +31,32 @@ def main():
     parse_cmd_args(settings)
     gui = Gui(settings)
     thread_context = ThreadContext(settings, gui)
-    thread_context.button_quit_handlers.append(lambda: os._exit(0))
-    _thread.start_new_thread(start_io_thread, (thread_context, pygame))
+    ioHub = IoHub(settings)
+    
+    presenter = create_slideshow_presenter(thread_context)
 
-    # main thread
-    start_presentation_thread(thread_context)
+    # main loopp
+    while True:
+        start_time = pygame.time.get_ticks()
+        end_time = start_time + settings.duration * 1000
+        presenter.present()
+        while pygame.time.get_ticks() < end_time:
+            check_events(ioHub)
+            if ioHub.next_flag_set():
+                presenter.handle_next()
+                break
 
+def check_events(ioHub: IoHub):
+    for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        ioHub.handle_keydown(event.key)
+    
 
-def start_presentation_thread(thread_context: ThreadContext):
+def create_slideshow_presenter(thread_context: ThreadContext):
     presentable_images_queue = Queue(maxsize=thread_context.settings.prepared_images_buffer_size)
     image_loader = ImageLoader(thread_context, presentable_images_queue)
     image_loader.start()
-    slideshow_presenter = SlideshowPresenter(presentable_images_queue, thread_context)
-    slideshow_presenter.present()
-
-
-def start_io_thread(thread_context: ThreadContext, pygame: pygame):
-    def short_press_handler():
-        thread_context.settings.display_date = not thread_context.settings.display_date
-        thread_context.settings.display_caption = thread_context.settings.display_date
-    thread_context.button_short_press_handlers.append(short_press_handler)
-    io_main = IoMain(thread_context, pygame)
-    io_main.start()
-
-
+    return SlideshowPresenter(presentable_images_queue, thread_context)
 
 if __name__ == "__main__":
     main()

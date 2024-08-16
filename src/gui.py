@@ -13,7 +13,7 @@ class Gui:
         self.mode = max(pygame.display.list_modes())
         # for testing on macbook
         if settings.dev_mode:
-            self.mode = (1440, 900)
+            self.mode = (1920, 1080)
         pygame.display.set_caption("rpy slideshow")
         pygame.display.set_mode(self.mode, pygame.DOUBLEBUF | pygame.HWSURFACE)
         if settings.fullscreen:
