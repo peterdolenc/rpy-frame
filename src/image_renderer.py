@@ -2,7 +2,7 @@ from entities.image_fitment import ImageFitment
 from gui import Gui
 from thread_context import ThreadContext
 from settings import Settings
-
+import time
 
 class ImageRenderer:
     def __init__(self, thread_context: ThreadContext):
@@ -16,6 +16,17 @@ class ImageRenderer:
 
         if self.screen_dimensions[0] > fitment.current_image.get_width():
             center_x = fitment.alignment
+
+        self.gui.display_image(
+            fitment.current_image,
+            center_x,
+            center_y,
+            fitment.current_background,
+            upper_text,
+            main_text,
+        )
+        
+        time.sleep(1)
 
         self.gui.display_image(
             fitment.current_image,
