@@ -13,9 +13,10 @@ RPy-Frame is a python software made for Raspberry PI that enables you to make yo
 - Photos are played in random order, however, once a photo is played a few images that were taken at about the same time will be played after it. The aim was to see a part of the event.
 - Photos are either scaled down so that they fit the screen or enlarged and scrolled during the playback. Since I find this behaviour tricky to get right, there are quite a few configuration rules available to tweak it.
 - When photo does not take the full screen, a background will be generated with a pattern that will use the dominant colors of the current photo.
-- There's also support for a phisical button, that can do the following at the moment:
-	- short press: toggle date display
-	- long press: advance to next photo
+- There's also support for a GPIO push button, that can do the following at the moment:
+	- short press: advance to next photo
+	- long press: show previous photo
+- You can also use keyboard keys: left, right, space, ESC
 - Almost everything is configurable - have a look at src/settings.py
 
 ### Running the slideshow
@@ -65,7 +66,7 @@ sudo pip3 install numpy
 sudo pip3 install matplotlib
 sudo pip3 install six
 sudo pip3 install fast_colorthief
-sudo pip3 install RPi.GPIO
+sudo pip3 install rpi-lgpio
 ```
 
 # Optional setup

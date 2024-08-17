@@ -3,7 +3,7 @@ import threading
 import datetime
 
 
-class PhisicalButtonHandler(threading.Thread):
+class GpioButtonHandler(threading.Thread):
     def __init__(self, pin, func, bouncetime=100):
         super().__init__(daemon=True)
 

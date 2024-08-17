@@ -26,12 +26,14 @@ class BackgroundMaker:
     def get_dominant_pattern(self, colors: List[Tuple[int]], animation=None) -> pygame.Surface:
         hex_colors = (self.to_hex(c) for c in colors[:5])
 
+        ppi = self.settings.background_ppi_min + random.random() * (self.settings.background_ppi_max - self.settings.background_ppi_min)
+
         if random.random() > 0.5:
-            surface = self.pattern_generator.playful_circles(*hex_colors, animation, self.settings.background_ppi, self.settings.background_alpha, self.settings.background_lightness,
-                                                             blur=self.settings.blur_background, blur_radius=self.settings.blur_background_radius*0.75)
+            surface = self.pattern_generator.playful_circles(*hex_colors, animation, ppi, self.settings.background_alpha, self.settings.background_lightness,
+                                                             blur=self.settings.blur_background, blur_radius=self.settings.blur_background_radius*0.5)
 
         else:
-            surface = self.pattern_generator.astro_stars(*hex_colors, animation, self.settings.background_ppi, self.settings.background_alpha, self.settings.background_lightness,
+            surface = self.pattern_generator.astro_stars(*hex_colors, animation, ppi, self.settings.background_alpha, self.settings.background_lightness,
                                                          blur=self.settings.blur_background, blur_radius=self.settings.blur_background_radius)
 
         return surface.convert()

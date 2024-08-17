@@ -1,15 +1,12 @@
 #!/usr/bin/python3
-import _thread
-import os
 from queue import Queue
 import pygame
 from gui import Gui
 from image_loading_pipeline.image_loader import ImageLoader
-from button_handlers.io_hub import IoHub
+from interaction.button_hub import ButtonHub
 from settings import Settings
 from slideshow_presenter import SlideshowPresenter
 import sys
-
 from thread_context import ThreadContext
 
 
@@ -31,7 +28,7 @@ def main():
     parse_cmd_args(settings)
     gui = Gui(settings)
     thread_context = ThreadContext(settings, gui)
-    ioHub = IoHub(settings)
+    buttonsHub = ButtonHub(settings)
     
     presenter = create_slideshow_presenter(thread_context)
 
@@ -41,15 +38,18 @@ def main():
         end_time = start_time + settings.duration * 1000
         presenter.present()
         while pygame.time.get_ticks() < end_time:
-            check_events(ioHub)
-            if ioHub.next_flag_set():
+            check_events(buttonsHub)
+            if buttonsHub.next_flag_set():
                 presenter.handle_next()
                 break
+            if buttonsHub.back_flag_set():
+                presenter.handle_back()
 
-def check_events(ioHub: IoHub):
+
+def check_events(buttonsHub: ButtonHub):
     for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN:
-                        ioHub.handle_keydown(event.key)
+                        buttonsHub.handle_keydown(event.key)
     
 
 def create_slideshow_presenter(thread_context: ThreadContext):

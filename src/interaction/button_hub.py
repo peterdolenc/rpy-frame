@@ -1,29 +1,28 @@
 import os
-import time
 import pygame
-
 from settings import Settings
 
-class IoHub():
+class ButtonHub():
     def __init__(self, settings: Settings):
         self.settings = settings
         self.button_short_press_handlers = []
         self.button_long_press_handlers = []
         self.button_quit_handlers = []
         self.pending_next = False
+        self.pending_back = False
 
-        self.button_long_press_handlers.append(self.next_button_handler)
-        self.button_short_press_handlers.append(self.short_press_handler)
+        self.button_long_press_handlers.append(self.back_button_handler)
+        self.button_short_press_handlers.append(self.next_button_handler)
         self.button_quit_handlers.append(lambda: os._exit(0))
 
-        if IoHub.is_rbpi():
+        if ButtonHub.is_rbpi():
             import RPi.GPIO as GPIO
-            from io_hub.phisical_button_handler import PhisicalButtonHandler
+            from button_hub.gpio_button_handler import GpioButtonHandler
             GPIO.setmode(GPIO.BOARD)
-            GPIO.setup(self.settings.physical_button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-            cb = PhisicalButtonHandler(self.settings.physical_button_pin, self.button_handler, bouncetime=150)
+            GPIO.setup(self.settings.gpio_button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+            cb = GpioButtonHandler(self.settings.gpio_button_pin, self.button_handler, bouncetime=150)
             cb.start()
-            GPIO.add_event_detect(self.settings.physical_button_pin, GPIO.BOTH, callback=cb)
+            GPIO.add_event_detect(self.settings.gpio_button_pin, GPIO.RISING, callback=cb)
 
     @staticmethod
     def is_rbpi():
@@ -33,14 +32,16 @@ class IoHub():
         if key_code == pygame.K_SPACE or key_code == pygame.K_RETURN: 
             self.trigger_short_press()
         elif key_code == pygame.K_RIGHT or key_code == pygame.HAT_RIGHT: 
-            self.trigger_long_press()
+            self.back_button_handler()
+        elif key_code == pygame.K_LEFT or key_code == pygame.HAT_LEFT: 
+            self.next_button_handler()
         elif key_code == pygame.K_ESCAPE or key_code == pygame.K_q:
             self.trigger_quit()
 
     def button_handler(self, duration):
         print("Physical button pressed with duration: " + str(duration) + " ms")
 
-        if duration > self.settings.physical_button_longpress_duration:
+        if duration > self.settings.gpio_button_longpress_duration:
             self.trigger_long_press()
         else:
             self.trigger_short_press()
@@ -61,14 +62,19 @@ class IoHub():
             handler()
 
     def next_flag_set(self):
+        if self.pending_back:
+            self.pending_back = False
+            return True
+        return False
+    
+    def back_flag_set(self):
         if self.pending_next:
             self.pending_next = False
             return True
         return False
 
-    def short_press_handler(self):
-        self.settings.display_date = not self.settings.display_date
-        self.settings.display_caption = self.settings.display_date
+    def back_button_handler(self):
+        self.pending_back = True
 
     def next_button_handler(self):
         self.pending_next = True

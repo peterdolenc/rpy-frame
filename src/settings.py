@@ -14,16 +14,26 @@ class Settings:
         # duration in seconds
         self.duration: int = 10 * 60
 
+     
+
+        # Background
+        # When both are enabled, they will be chosen by random
+        self.background_patterns = True
+        self.background_solid_color = True
+        self.blur_background = True
+        self.blur_background_radius = 6
+
         # Alpha value of the background - colors of the background will not be as strong as the colors of the photo
         # They will be projected against neutral gray that is controlled by background_lightness and where 0.5 means 50% gray
-        self.background_alpha: float = 0.1
-        self.background_lightness: float = 0.0
+        self.background_alpha: float = 0.05
+        self.background_lightness: float = 0.1
 
         # PPI (pixels per inch) of the background
         # Lower values will result in more repetitions of the background patterns
-        self.background_ppi: int = 300
+        self.background_ppi_min: int = 200
+        self.background_ppi_max: int = 600
         self.background_amount_min: float = 0.3
-        self.background_amount_max: float = 0.7
+        self.background_amount_max: float = 0.8
 
         # Border thicknesses and colors
         # Inner border is considered part of the picture and is always black
@@ -35,18 +45,15 @@ class Settings:
         self.border_inner: int = 0
         self.border_outer: int = 0
 
-        # background
-        self.background_patterns = True
-        self.blur_background = True
-        self.blur_background_radius = 6
+        
 
         # Whether to display date in top-left corner and caption in main content
         self.display_date: bool = True
         self.display_caption: bool = True
 
         # Physical button RPI
-        self.physical_button_pin = 23
-        self.physical_button_longpress_duration = 600
+        self.gpio_button_pin = 23
+        self.gpio_button_longpress_duration = 600
 
         # Prepared images buffer size - how many images are prepared in advance
         self.prepared_images_buffer_size = 10

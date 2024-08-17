@@ -1,4 +1,5 @@
 import threading
+import random
 from queue import Queue
 
 from entities.presentable_image import PresentableImage
@@ -58,7 +59,7 @@ class ImageLoader(threading.Thread):
         fitment = self.image_fitter.fit_new_image(image)
         if not fitment.full_screen:
             dominant_colors = DominantColorExtractor.get_dominant_colors(image_meta, fitment.current_image)
-            if self.settings.background_patterns:
+            if self.settings.background_patterns and (not self.settings.background_solid_color or random.random() > 0.4):
                 fitment.current_background = self.background_maker.get_dominant_pattern(dominant_colors)
             else:
                 fitment.current_background = self.background_maker.get_dominant_color_fill(dominant_colors)
