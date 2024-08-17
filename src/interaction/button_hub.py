@@ -18,12 +18,12 @@ class ButtonHub():
         if ButtonHub.is_rbpi():
             print("Device recognized as Raspbery PI")
             import RPi.GPIO as GPIO
-            from button_hub.gpio_button_handler import GpioButtonHandler
+            from interaction.gpio_button_handler import GpioButtonHandler
             GPIO.setmode(GPIO.BOARD)
             GPIO.setup(self.settings.gpio_button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
             cb = GpioButtonHandler(self.settings.gpio_button_pin, self.button_handler, bouncetime=150)
             cb.start()
-            GPIO.add_event_detect(self.settings.gpio_button_pin, GPIO.RISING, callback=cb)
+            GPIO.add_event_detect(self.settings.gpio_button_pin, GPIO.BOTH, callback=cb)
 
     @staticmethod
     def is_rbpi():
