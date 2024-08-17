@@ -63,16 +63,17 @@ if __name__ == "__main__":
 
 
 # TODO:
-# Super-long-press: skip the whole sequence
+# Reduce alpha of solid image bg
+# Make images appear on screen sooner after the startup
+# Prioritize (weighted) images taken on the same day from previous years
+# Add an API where you can send next/prev signals
+# Add secondary folder support and add feature to switch to it via the API
+# Find out image average brightness and adjust backgrounds to match it (one stop darker bit darker)
+# Double-tap: skip the whole sequence
 # Read camera/lens information and display it
 # Transition when changing image
 
-
 # TODO / MAYBE
 # Layout where image is on the side and on the other side the date and the caption are displaye
-# Backgrounds where a pattern is made of the current image
 # Enable more backgrounds
 # Add movie support
-# Animated backgrounds?
-# Image transitions?
-# Image effects (2 images merged?)

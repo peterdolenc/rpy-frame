@@ -1,12 +1,9 @@
 import math
 import random
 from typing import List
-
 import matplotlib
 import numpy as np
-import PIL
 import pygame
-
 matplotlib.use('Agg')
 import matplotlib.backends.backend_agg as agg
 import matplotlib.pyplot as plt

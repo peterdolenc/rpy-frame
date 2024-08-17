@@ -16,6 +16,7 @@ class ButtonHub():
         self.button_quit_handlers.append(lambda: os._exit(0))
 
         if ButtonHub.is_rbpi():
+            print("Device recognized as Raspbery PI")
             import RPi.GPIO as GPIO
             from button_hub.gpio_button_handler import GpioButtonHandler
             GPIO.setmode(GPIO.BOARD)
@@ -26,7 +27,7 @@ class ButtonHub():
 
     @staticmethod
     def is_rbpi():
-        return os.uname()[4][:3] == 'arm'
+        return 'arm' in os.uname()[4] or 'aarch64' in os.uname()[4]
 
     def handle_keydown(self, key_code):
         if key_code == pygame.K_SPACE or key_code == pygame.K_RETURN: 

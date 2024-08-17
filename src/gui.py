@@ -73,18 +73,18 @@ class Gui:
         pygame.display.update()
         pygame.event.pump()
 
-    def render_upper_right_text(self, text, font=36):
+    def render_upper_right_text(self, text):
         space = 10
-        font = pygame.font.SysFont(None, font)
+        font = pygame.font.SysFont(self.settings.font_name, self.settings.font_size+5)
         text_bg = font.render(text, True, (0, 0, 0))
         text = font.render(text, True, (255, 255, 255))
         x = self.mode[0] - text.get_width() - space
         y = space
         self.render_texts_at_popsition(text, text_bg, x, y)
 
-    def render_main_text(self, text: str, line=0, font_size=30):
+    def render_main_text(self, text: str, line=0):
         gap = 80
-        font = pygame.font.SysFont(None, font_size)
+        font = pygame.font.SysFont(self.settings.font_name, self.settings.font_size)
         text_bg = font.render(text, True, (0, 0, 0))
         text_fg = font.render(text, True, (255, 255, 255))
         x = (self.mode[0] - text_fg.get_width()) / 2

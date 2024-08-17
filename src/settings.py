@@ -21,7 +21,8 @@ class Settings:
         self.background_patterns = True
         self.background_solid_color = True
         self.blur_background = True
-        self.blur_background_radius = 6
+        self.blur_background_radius_min = 5
+        self.blur_background_radius_max = 10
 
         # Alpha value of the background - colors of the background will not be as strong as the colors of the photo
         # They will be projected against neutral gray that is controlled by background_lightness and where 0.5 means 50% gray
@@ -30,8 +31,8 @@ class Settings:
 
         # PPI (pixels per inch) of the background
         # Lower values will result in more repetitions of the background patterns
-        self.background_ppi_min: int = 200
-        self.background_ppi_max: int = 600
+        self.background_ppi_min: int = 150
+        self.background_ppi_max: int = 1000
         self.background_amount_min: float = 0.3
         self.background_amount_max: float = 0.8
 
@@ -50,6 +51,8 @@ class Settings:
         # Whether to display date in top-left corner and caption in main content
         self.display_date: bool = True
         self.display_caption: bool = True
+        self.font_name = "Quicksand"
+        self.font_size = 30
 
         # Physical button RPI
         self.gpio_button_pin = 23
