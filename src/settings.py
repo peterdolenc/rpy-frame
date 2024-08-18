@@ -16,7 +16,7 @@ class Settings:
 
         # API control endpoint
         self.api_enabled = True
-        self.api_port = 80
+        self.api_port = 3000
 
         # Background
         # When both are enabled, they will be chosen by random
