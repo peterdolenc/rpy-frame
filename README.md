@@ -53,20 +53,21 @@ python3 main.py
 ```
 
 ### Install python packages
-Probably you will need to install all the missing python packages first. For me the recipe was the following:
+Probably you will need to install all the missing python packages first. For most of pip packages you could instead make a global package installation with "sudo apt-get install python3-package-name" For me the recipe was the following:
 
 ```bash
 sudo apt-get update
 sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libfreetype6-dev python3-setuptools python3-dev python3 libportmidi-dev
 sudo apt-get install python3-numpy libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsmpeg-dev libavformat-dev libswscale-dev libjpeg-dev
-sudo pip3 install --upgrade pip
-sudo pip3 install pygame-ce
-sudo pip3 install pillow
-sudo pip3 install numpy
-sudo pip3 install matplotlib
-sudo pip3 install six
-sudo pip3 install fast_colorthief
-sudo pip3 install rpi-lgpio
+sudo pip install --upgrade pip
+sudo pip install pygame-ce
+sudo pip install pillow
+sudo pip install numpy
+sudo pip install matplotlib
+sudo pip install six
+sudo pip install fast_colorthief
+sudo pip install rpi-lgpio
+sudo pip install aiohttp
 ```
 
 # Optional setup
@@ -97,6 +98,17 @@ NoDisplay=false
 
 Also don't forget to setup your raspi to boot to desktop and configure that "start bar" to auto.hide. This will give you the full "kiosk mode" experience.
 
+### Add API port redirect
+
+Raspbian linux probably comes with security restriction that only allows apps executed by the root to bind to ports bellow 1024. If you want the API to be served from default HTTP port 80, then the most flexible resolution is to actually run the API on another port, say 3000, and make a permanent redirect from 80 to 3000.
+
+```bash
+sudo apt-get install iptables iptables-persistent
+sudo iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 3000
+sudo su
+iptables-save -c > /etc/iptables/rules.v4
+exit
+```
 
 ### Turn off the display during the night to save energy
 I used crontab for that. The commands handle raspi's video out and basically get the screen to go to standby. Here are the two crontab commands that will add a schedule to turn off the display every day at 22.30 and turn it back up at 05:15 in the morning. Feel free to adjust to your needs.
