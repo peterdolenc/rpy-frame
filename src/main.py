@@ -3,11 +3,13 @@ from queue import Queue
 import pygame
 from gui import Gui
 from image_loading_pipeline.image_loader import ImageLoader
+from interaction.api_server import ApiServer
 from interaction.button_hub import ButtonHub
 from settings import Settings
 from slideshow_presenter import SlideshowPresenter
 import sys
 from thread_context import ThreadContext
+import threading
 
 
 def parse_cmd_args(settings: Settings):
@@ -28,8 +30,11 @@ def main():
     parse_cmd_args(settings)
     gui = Gui(settings)
     thread_context = ThreadContext(settings, gui)
-    buttonsHub = ButtonHub(settings)
-    
+    buttonHub = ButtonHub(settings)
+    if settings.api_enabled:
+        api = ApiServer(settings, buttonHub)
+        t = threading.Thread(target=api.start_bg)
+        t.start()
     presenter = create_slideshow_presenter(thread_context)
 
     # main loopp
@@ -38,18 +43,18 @@ def main():
         end_time = start_time + settings.duration * 1000
         presenter.present()
         while pygame.time.get_ticks() < end_time:
-            check_events(buttonsHub)
-            if buttonsHub.next_flag_set():
+            check_events(buttonHub)
+            if buttonHub.next_flag_set():
                 presenter.handle_next()
                 break
-            if buttonsHub.back_flag_set():
+            if buttonHub.back_flag_set():
                 presenter.handle_back()
 
 
-def check_events(buttonsHub: ButtonHub):
+def check_events(buttonHub: ButtonHub):
     for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN:
-                        buttonsHub.handle_keydown(event.key)
+                        buttonHub.handle_keydown(event.key)
     
 
 def create_slideshow_presenter(thread_context: ThreadContext):
@@ -66,7 +71,6 @@ if __name__ == "__main__":
 # Reduce alpha of solid image bg
 # Make images appear on screen sooner after the startup
 # Prioritize (weighted) images taken on the same day from previous years
-# Add an API where you can send next/prev signals
 # Add secondary folder support and add feature to switch to it via the API
 # Find out image average brightness and adjust backgrounds to match it (one stop darker bit darker)
 # Double-tap: skip the whole sequence

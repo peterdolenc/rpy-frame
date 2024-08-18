@@ -14,7 +14,9 @@ class Settings:
         # duration in seconds
         self.duration: int = 10 * 60
 
-     
+        # API control endpoint
+        self.api_enabled = True
+        self.api_port = 80
 
         # Background
         # When both are enabled, they will be chosen by random
@@ -52,7 +54,7 @@ class Settings:
         self.display_date: bool = True
         self.display_caption: bool = True
         self.font_name = "Quicksand"
-        self.font_size = 30
+        self.font_size = 26
 
         # Physical button RPI
         self.gpio_button_pin = 23
