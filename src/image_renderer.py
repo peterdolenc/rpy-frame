@@ -17,6 +17,7 @@ class ImageRenderer:
         if self.screen_dimensions[0] > fitment.current_image.get_width():
             center_x = fitment.alignment
 
+        # todo: split render and display
         self.gui.display_image(
             fitment.current_image,
             center_x,
@@ -26,7 +27,7 @@ class ImageRenderer:
             main_text,
         )
         
-        time.sleep(0.01)
+        time.sleep(0.001)
 
         self.gui.display_image(
             fitment.current_image,

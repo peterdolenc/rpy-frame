@@ -53,8 +53,8 @@ class Settings:
         # Whether to display date in top-left corner and caption in main content
         self.display_date: bool = True
         self.display_caption: bool = True
-        self.font_name = "Quicksand"
-        self.font_size = 26
+        self.font_name = "Quicksand-Medium"
+        self.font_size = 24
 
         # Physical button RPI
         self.gpio_button_pin = 23

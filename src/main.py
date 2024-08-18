@@ -69,7 +69,6 @@ if __name__ == "__main__":
 
 # TODO:
 # Reduce alpha of solid image bg
-# Make images appear on screen sooner after the startup
 # Prioritize (weighted) images taken on the same day from previous years
 # Add secondary folder support and add feature to switch to it via the API
 # Find out image average brightness and adjust backgrounds to match it (one stop darker bit darker)

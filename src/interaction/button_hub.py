@@ -29,9 +29,9 @@ class ButtonHub():
         if key_code == pygame.K_SPACE or key_code == pygame.K_RETURN: 
             self.trigger_short_press()
         elif key_code == pygame.K_RIGHT or key_code == pygame.HAT_RIGHT: 
-            self.back_button_handler()
-        elif key_code == pygame.K_LEFT or key_code == pygame.HAT_LEFT: 
             self.next_button_handler()
+        elif key_code == pygame.K_LEFT or key_code == pygame.HAT_LEFT: 
+            self.back_button_handler()
         elif key_code == pygame.K_ESCAPE or key_code == pygame.K_q:
             self.trigger_quit()
 

@@ -1,7 +1,8 @@
 import threading
+from threading import Thread
 import random
+import time
 from queue import Queue
-
 from entities.presentable_image import PresentableImage
 from image_loading_pipeline.background_maker import BackgroundMaker
 from image_loading_pipeline.helpers.dominant_color_extractor import (
@@ -21,19 +22,19 @@ class ImageLoader(threading.Thread):
         self.gui = thread_context.gui
         self.image_fitter = ImageFitter(thread_context)
         self.image_library = ImageLibrary(thread_context)
-        self.image_library.initialize()
+        self.image_library.initialize_starting_set()
         self.background_maker = BackgroundMaker(
             self.gui.get_screen_resolution(), self.settings
         )
         self.presentable_images_queue = presentable_images_queue
         self.stop_request = threading.Event()
-
         self.current_sequence = None
         self.current_index = -1
 
     # initializes the image library by detecting metadata and sorting images
     def run(self):
         self.current_sequence = self.image_library.get_sequence()
+        Thread(target=self.image_library.initialize).start()
         while not self.stop_request.isSet():
             try:
                 meta = self.next_image_meta()
@@ -41,6 +42,7 @@ class ImageLoader(threading.Thread):
                     print("[bg image loader]: preparing: " + meta.full_path)
                     img = self.load_and_fit_image(meta)
                     self.presentable_images_queue.put(img)
+                    time.sleep(0)
                 except Exception as e:
                     print("[bg image loader]: error loading: " + meta.full_path)
                     print(e)
@@ -56,11 +58,15 @@ class ImageLoader(threading.Thread):
 
     def load_and_fit_image(self, image_meta):
         image = FileLoader.load_image(image_meta.full_path)
+        time.sleep(0)
         fitment = self.image_fitter.fit_new_image(image)
+        time.sleep(0)
         if not fitment.full_screen:
             dominant_colors = DominantColorExtractor.get_dominant_colors(image_meta, fitment.current_image)
+            time.sleep(0)
             if self.settings.background_patterns and (not self.settings.background_solid_color or random.random() > 0.4):
                 fitment.current_background = self.background_maker.get_dominant_pattern(dominant_colors)
             else:
                 fitment.current_background = self.background_maker.get_dominant_color_fill(dominant_colors)
+                time.sleep(0)
         return PresentableImage(image_meta, fitment)

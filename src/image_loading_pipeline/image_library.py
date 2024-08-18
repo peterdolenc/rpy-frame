@@ -13,25 +13,36 @@ class ImageLibrary:
     def __init__(self, thread_context: ThreadContext):
         self.settings = thread_context.settings
         self.image_metas: List[ImageMeta] = None
+        self.image_paths = None
         self.count: int = 0
 
     def discover_images(self, directory: str) -> List[str]:
         images = FileLoader.get_files_from_directory(directory)
         print(f"[image discovery]: {len(images):d} images discovered.")
-
         return images
 
     # initializes the image library by detecting metadata and sorting images
     def initialize(self):
-        image_paths = self.discover_images(self.settings.media_folder)
-        self.image_metas = [self.get_image_metadata(image) for image in image_paths]
-        self.image_metas.sort(key=lambda im: im.sort_key())
+        image_metas = [self.get_image_metadata(image) for image in self.image_paths]
+        image_metas.sort(key=lambda im: im.sort_key())
+        self.image_metas = image_metas
         self.count: int = len(self.image_metas)
         print(f"[image discovery]: {self.count:d} images parsed correctly.")
 
+    def initialize_starting_set(self, set_size=10):
+        self.image_paths = self.discover_images(self.settings.media_folder)
+        files_count = len(self.image_paths)
+        set_size = min(set_size, files_count)
+        first_index = random.randint(0, files_count - set_size)
+        paths_subset = [ self.image_paths[i] for i in range(first_index, first_index + set_size) ]
+        self.image_metas = [self.get_image_metadata(image) for image in paths_subset]
+        self.image_metas.sort(key=lambda im: im.sort_key())
+        self.count: int = len(self.image_metas)
+        print(f"[image discovery]: {self.count:d} images parsed correctly for starting set.")
+
     # creates a new sequence of random length
     # sequence always provides images that are close together
-    def get_sequence(self, min_len=4, max_len=8) -> List[ImageMeta]:
+    def get_sequence(self, min_len=5, max_len=10) -> List[ImageMeta]:
         sequence_len = random.randint(min_len, max_len)
         print(f"Starting a new sequence with length of {sequence_len:d}")
         first_index = random.randint(0, self.count - sequence_len)

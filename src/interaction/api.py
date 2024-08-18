@@ -11,7 +11,7 @@ class Api():
         return web.Response(text="""
                 <html>
                     <head><title>rpy-frame</title></head>
-                    <body>
+                    <body style="width: 500px">
                         <h3>rpy-frame</h4>
                         <p><a href="/back"><button>back</button></a> &nbsp; <a href="/next"><button>next</button></a></p>
                     </body>
