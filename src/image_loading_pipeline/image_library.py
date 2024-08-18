@@ -1,4 +1,5 @@
 import random
+import time
 import PIL.Image
 import PIL.ExifTags
 from datetime import datetime
@@ -23,7 +24,11 @@ class ImageLibrary:
 
     # initializes the image library by detecting metadata and sorting images
     def initialize(self):
-        image_metas = [self.get_image_metadata(image) for image in self.image_paths]
+        image_metas = []
+        for image in self.image_paths:
+            meta = self.get_image_metadata(image) 
+            image_metas.append(meta)
+            time.sleep(0)
         image_metas.sort(key=lambda im: im.sort_key())
         self.image_metas = image_metas
         self.count: int = len(self.image_metas)
