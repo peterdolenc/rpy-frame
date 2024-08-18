@@ -11,18 +11,21 @@ import sys
 from thread_context import ThreadContext
 import threading
 
-
 def parse_cmd_args(settings: Settings):
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 2:
+        settings.media_folder = sys.argv[1]
+        settings.media_folder_secondary = sys.argv[2]
+    elif len(sys.argv) == 2:
+        settings.media_folder = sys.argv[1]
         if sys.argv[1] == 'dev':
             settings.dev_mode = True
             settings.duration = 20
             settings.fullscreen = False
+            settings.media_folder = "../samples"
             print("Running in dev mode.")
-        else:
-            settings.media_folder = sys.argv[1]
     print(f"Using {settings.media_folder} as media directory.")
-
+    if settings.media_folder_secondary: 
+         print(f"Using {settings.media_folder_secondary} as secondary media directory.")
 
 def main():
     pygame.init()
@@ -33,9 +36,11 @@ def main():
     buttonHub = ButtonHub(settings)
     if settings.api_enabled:
         api = ApiServer(settings, buttonHub)
-        t = threading.Thread(target=api.start_bg)
-        t.start()
-    presenter = create_slideshow_presenter(thread_context)
+        threading.Thread(target=api.start_bg).start()
+    presenter = SlideshowPresenter(thread_context, settings.media_folder, settings.prepared_images_buffer_size)
+    primaryPresenter, secondaryPresenter = presenter, presenter
+    if settings.media_folder_secondary: 
+        secondaryPresenter = SlideshowPresenter(thread_context, settings.media_folder_secondary, 1)
 
     # main loopp
     while True:
@@ -49,6 +54,12 @@ def main():
                 break
             if buttonHub.back_flag_set():
                 presenter.handle_back()
+            if buttonHub.switch_to_secondary_flag_set():
+                presenter = secondaryPresenter
+                break
+            if buttonHub.switch_to_primary_flag_set():
+                presenter = primaryPresenter
+                break
 
 
 def check_events(buttonHub: ButtonHub):
@@ -57,12 +68,6 @@ def check_events(buttonHub: ButtonHub):
                         buttonHub.handle_keydown(event.key)
     
 
-def create_slideshow_presenter(thread_context: ThreadContext):
-    presentable_images_queue = Queue(maxsize=thread_context.settings.prepared_images_buffer_size)
-    image_loader = ImageLoader(thread_context, presentable_images_queue)
-    image_loader.start()
-    return SlideshowPresenter(presentable_images_queue, thread_context)
-
 if __name__ == "__main__":
     main()
 
@@ -70,7 +75,6 @@ if __name__ == "__main__":
 # TODO:
 # Reduce alpha of solid image bg
 # Prioritize (weighted) images taken on the same day from previous years
-# Add secondary folder support and add feature to switch to it via the API
 # Find out image average brightness and adjust backgrounds to match it (one stop darker bit darker)
 # Double-tap: skip the whole sequence
 # Read camera/lens information and display it

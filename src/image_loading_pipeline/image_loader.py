@@ -16,16 +16,14 @@ from settings import Settings
 
 
 class ImageLoader(threading.Thread):
-    def __init__(self, thread_context: ThreadContext, presentable_images_queue: Queue):
+    def __init__(self, thread_context: ThreadContext, presentable_images_queue: Queue, media_folder):
         super(ImageLoader, self).__init__()
         self.settings: Settings = thread_context.settings
         self.gui = thread_context.gui
         self.image_fitter = ImageFitter(thread_context)
-        self.image_library = ImageLibrary(thread_context)
+        self.image_library = ImageLibrary(media_folder)
         self.image_library.initialize_starting_set()
-        self.background_maker = BackgroundMaker(
-            self.gui.get_screen_resolution(), self.settings
-        )
+        self.background_maker = BackgroundMaker(self.gui.get_screen_resolution(), self.settings)
         self.presentable_images_queue = presentable_images_queue
         self.stop_request = threading.Event()
         self.current_sequence = None

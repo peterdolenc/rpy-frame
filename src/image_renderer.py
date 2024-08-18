@@ -1,14 +1,11 @@
 from entities.image_fitment import ImageFitment
 from gui import Gui
-from thread_context import ThreadContext
-from settings import Settings
 import time
 
 class ImageRenderer:
-    def __init__(self, thread_context: ThreadContext):
-        self.gui: Gui = thread_context.gui
+    def __init__(self, gui: Gui):
+        self.gui: Gui = gui
         self.screen_dimensions = self.gui.get_screen_resolution()
-        self.settings: Settings = thread_context.settings
 
     def draw(self, fitment: ImageFitment, upper_text=None, main_text=None):
         center_x = (self.screen_dimensions[0] - fitment.current_image.get_width()) / 2

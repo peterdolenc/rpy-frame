@@ -6,8 +6,7 @@ class ButtonHub():
     def __init__(self, settings: Settings):
         self.settings = settings
         self.button_quit_handlers = []
-        self.pending_next = False
-        self.pending_back = False
+        self.pending_next, self.pending_back, self.pending_switch_to_primary, self.pending_switch_to_secondary = False, False, False, False
 
         self.button_quit_handlers.append(lambda: os._exit(0))
 
@@ -54,15 +53,34 @@ class ButtonHub():
     def next_button_handler(self):
         self.pending_next = True
 
+    def switch_to_primary_handler(self):
+        self.pending_switch_to_primary = True
 
+    def switch_to_secondary_handler(self):
+        self.pending_switch_to_secondary = True
+
+
+    # TODO: extract to PendingButtonActions
     def back_flag_set(self):
         if self.pending_back:
             self.pending_back = False
             return True
         return False
-    
+
     def next_flag_set(self):
         if self.pending_next:
             self.pending_next = False
+            return True
+        return False
+    
+    def switch_to_secondary_flag_set(self):
+        if self.pending_switch_to_secondary:
+            self.pending_switch_to_secondary = False
+            return True
+        return False
+    
+    def switch_to_primary_flag_set(self):
+        if self.pending_switch_to_primary:
+            self.pending_switch_to_primary = False
             return True
         return False

@@ -11,9 +11,10 @@ class Api():
         return web.Response(text="""
                 <html>
                     <head><title>rpy-frame</title></head>
-                    <body style="width: 500px">
-                        <h3>rpy-frame</h4>
+                    <body style="width: 400px;max-width: 400px;overflow-x: hidden !important;">
+                        <h3>rpy-frame</h3>
                         <p><a href="/back"><button>back</button></a> &nbsp; <a href="/next"><button>next</button></a></p>
+                        <p><a href="/primary"><button>primary</button></a> &nbsp; <a href="/secondary"><button>secondary</button></a></p>
                     </body>
                 </html>
                 """,
@@ -25,5 +26,13 @@ class Api():
     
     def back(self, request):
         self.buttonHub.back_button_handler()
+        return self.home(request)
+    
+    def primary(self, request):
+        self.buttonHub.switch_to_primary_handler()
+        return self.home(request)
+    
+    def secondary(self, request):
+        self.buttonHub.switch_to_secondary_handler()
         return self.home(request)
 

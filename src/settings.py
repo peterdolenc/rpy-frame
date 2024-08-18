@@ -10,6 +10,7 @@ class Settings:
         # media folder
         # will be replaced by commandline param
         self.media_folder: str = "../samples"
+        self.media_folder_secondary: str = None
 
         # duration in seconds
         self.duration: int = 10 * 60

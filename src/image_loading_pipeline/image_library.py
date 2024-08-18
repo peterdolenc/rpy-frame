@@ -7,12 +7,11 @@ from typing import List
 from bs4 import BeautifulSoup
 from entities.image_meta import ImageMeta
 from image_loading_pipeline.helpers.file_loader import FileLoader
-from thread_context import ThreadContext
 
 
 class ImageLibrary:
-    def __init__(self, thread_context: ThreadContext):
-        self.settings = thread_context.settings
+    def __init__(self, media_folder: str):
+        self.media_folder = media_folder
         self.image_metas: List[ImageMeta] = None
         self.image_paths = None
         self.count: int = 0
@@ -35,7 +34,7 @@ class ImageLibrary:
         print(f"[image discovery]: {self.count:d} images parsed correctly.")
 
     def initialize_starting_set(self, set_size=10):
-        self.image_paths = self.discover_images(self.settings.media_folder)
+        self.image_paths = self.discover_images(self.media_folder)
         files_count = len(self.image_paths)
         set_size = min(set_size, files_count)
         first_index = random.randint(0, files_count - set_size)
@@ -48,12 +47,11 @@ class ImageLibrary:
     # creates a new sequence of random length
     # sequence always provides images that are close together
     def get_sequence(self, min_len=5, max_len=10) -> List[ImageMeta]:
-        sequence_len = random.randint(min_len, max_len)
+        images_available = len(self.image_metas)
+        sequence_len = min(random.randint(min_len, max_len), images_available)
         print(f"Starting a new sequence with length of {sequence_len:d}")
         first_index = random.randint(0, self.count - sequence_len)
-        sequence = [
-            self.image_metas[i] for i in range(first_index, first_index + sequence_len)
-        ]
+        sequence = [ self.image_metas[i] for i in range(first_index, first_index + sequence_len) ]
         random.shuffle(sequence)
         return sequence
 

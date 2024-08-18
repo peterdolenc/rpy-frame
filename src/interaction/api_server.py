@@ -16,7 +16,9 @@ class ApiServer:
         self.app.add_routes([
             web.get('/', api.home),
             web.get('/next', api.next),
-            web.get('/back', api.back)
+            web.get('/back', api.back),
+            web.get('/primary', api.primary),
+            web.get('/secondary', api.secondary)
         ])
 
     def start(self):
